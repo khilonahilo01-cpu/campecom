@@ -268,12 +268,6 @@ tr:hover td{background:rgba(75,142,245,0.015)}
 }
 </style>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-  const SUPABASE_URL = 'https://bssyjcnbderxasixarol.supabase.co';
-  const SUPABASE_KEY = 'sb_publishable_JAVCX4L3P6tlJOwwu8yr5A_5CNpRZwB';
-  const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-</script>
 </head>
 <body>
 
@@ -342,15 +336,17 @@ tr:hover td{background:rgba(75,142,245,0.015)}
   <div style="background:var(--bg2);border-bottom:1px solid var(--border);padding:0 5%;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50">
     <div style="display:flex;align-items:center;gap:12px">
       <span id="judge-portal-name" style="font-size:1rem;font-weight:800;color:var(--accent)"></span>
-      <span style="background:rgba(75,142,245,0.1);border:1px solid rgba(75,142,245,0.2);color:var(--accent);font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:100px">لجنة التحكيم</span>
+      <span id="judge-role-badge" style="background:rgba(75,142,245,0.1);border:1px solid rgba(75,142,245,0.2);color:var(--accent);font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:100px">لجنة التحكيم</span>
     </div>
-    <button onclick="judgeLogout()" style="background:transparent;border:1px solid var(--border2);color:var(--muted);padding:7px 16px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer">خروج</button>
+    <div style="display:flex;align-items:center;gap:0.8rem">
+      <button onclick="toggleJudgeLang()" id="judge-lang-btn" style="background:transparent;border:1px solid var(--border2);color:var(--muted);padding:6px 14px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:800;cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--muted)'">FR</button>
+      <button onclick="judgeLogout()" id="judge-logout-btn" style="background:transparent;border:1px solid var(--border2);color:var(--muted);padding:7px 16px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer">خروج</button>
   </div>
   <div style="max-width:820px;margin:0 auto;padding:2rem 1.5rem">
     <div style="margin-bottom:1.5rem">
       <div style="font-size:0.72rem;font-weight:700;color:var(--accent);letter-spacing:1px;margin-bottom:0.4rem">التحكيم</div>
-      <h2 style="font-size:1.4rem;font-weight:900;margin-bottom:0.3rem">قيّم الفرق</h2>
-      <p style="color:var(--muted);font-size:0.85rem">شوف أعمال كل فريق ودخل نقاطك — تقييمك مستقل عن باقي الحكام</p>
+      <h2 id="judge-title" style="font-size:1.4rem;font-weight:900;margin-bottom:0.3rem">قيّم الفرق</h2>
+      <p id="judge-desc" style="color:var(--muted);font-size:0.85rem">شوف أعمال كل فريق ودخل نقاطك — تقييمك مستقل عن باقي الحكام</p>
     </div>
     <!-- Team selector -->
     <div style="display:flex;gap:0.6rem;flex-wrap:wrap;margin-bottom:1.5rem" id="judge-team-tabs"></div>
@@ -358,9 +354,9 @@ tr:hover td{background:rgba(75,142,245,0.015)}
     <div id="judge-team-content"></div>
     <!-- Score form -->
     <div id="judge-score-section" style="display:none;margin-top:1.5rem">
-      <div style="font-size:0.85rem;font-weight:800;color:var(--muted);margin-bottom:1rem;letter-spacing:0.5px">✍️ تقييمك للفريق</div>
+      <div id="judge-score-title" style="font-size:0.85rem;font-weight:800;color:var(--muted);margin-bottom:1rem;letter-spacing:0.5px">✍️ تقييمك للفريق</div>
       <div id="judge-score-form"></div>
-      <button onclick="submitJudgeScores()" style="margin-top:1.2rem;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#000;padding:12px 28px;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:800;cursor:pointer;width:100%">حفظ التقييم ←</button>
+      <button id="judge-save-btn" onclick="submitJudgeScores()" style="margin-top:1.2rem;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#000;padding:12px 28px;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:800;cursor:pointer;width:100%">حفظ التقييم ←</button>
     </div>
   </div>
 </div>
@@ -393,6 +389,7 @@ tr:hover td{background:rgba(75,142,245,0.015)}
     </nav>
     <div class="sb-bottom">
       <a href="admin.html" style="display:block;width:100%;background:transparent;border:1px solid var(--border2);color:var(--muted);padding:8px;border-radius:8px;font-family:Cairo,sans-serif;font-size:0.8rem;font-weight:700;text-decoration:none;text-align:center;margin-bottom:8px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--muted)'">📊 لوحة الأدمين</a>
+    <button onclick="clearManagerData()" style="width:100%;background:transparent;border:1px solid rgba(239,68,68,0.2);color:var(--danger);padding:8px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;margin-bottom:6px;transition:all 0.2s">🗑 مسح البيانات</button>
     <button class="btn-logout-sm" onclick="logout()">تسجيل الخروج</button>
     </div>
   </aside>
@@ -463,29 +460,62 @@ tr:hover td{background:rgba(75,142,245,0.015)}
 
       <!-- ══ PARTICIPANTS ══ -->
       <div class="page" id="page-participants">
-        <div class="section-hd">
-          <div style="display:flex;gap:0.8rem;align-items:center;flex-wrap:wrap">
-            <input class="search-bar" id="p-search" placeholder="🔍 ابحث..." oninput="renderParticipants()">
+
+        <!-- KPIs -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.8rem;margin-bottom:1.2rem">
+          <div class="card" style="text-align:center;padding:1rem">
+            <div style="font-size:1.8rem;font-weight:900;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text" id="kpi-p-total">0</div>
+            <div style="font-size:0.75rem;color:var(--muted);margin-top:2px">إجمالي المسجلين</div>
+          </div>
+          <div class="card" style="text-align:center;padding:1rem">
+            <div style="font-size:1.8rem;font-weight:900;color:var(--success)" id="kpi-p-confirmed">0</div>
+            <div style="font-size:0.75rem;color:var(--muted);margin-top:2px">مؤكدون ✅</div>
+          </div>
+          <div class="card" style="text-align:center;padding:1rem">
+            <div style="font-size:1.8rem;font-weight:900;color:var(--danger)" id="kpi-p-cancelled">0</div>
+            <div style="font-size:0.75rem;color:var(--muted);margin-top:2px">ملغيون ❌</div>
+          </div>
+          <div class="card" style="text-align:center;padding:1rem">
+            <div style="font-size:1.8rem;font-weight:900;color:var(--accent)" id="kpi-p-pending">0</div>
+            <div style="font-size:0.75rem;color:var(--muted);margin-top:2px">قيد الانتظار ⏳</div>
+          </div>
+        </div>
+
+        <!-- TOOLBAR -->
+        <div class="section-hd" style="margin-bottom:1rem">
+          <div style="display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap">
+            <input class="search-bar" id="p-search" placeholder="🔍 بحث باسم، هاتف، إيميل..." oninput="renderParticipants()">
             <select class="flt" id="p-level" onchange="renderParticipants()">
               <option value="">كل المستويات</option>
               <option value="beginner">مبتدئ</option>
               <option value="intermediate">متوسط</option>
               <option value="advanced">محترف</option>
             </select>
-            <select class="flt" id="p-team-filter" onchange="renderParticipants()">
+            <select class="flt" id="p-status-filter" onchange="renderParticipants()">
               <option value="">كل الحالات</option>
+              <option value="confirmed">مؤكد ✅</option>
+              <option value="pending">قيد الانتظار ⏳</option>
+              <option value="cancelled">ملغي ❌</option>
+            </select>
+            <select class="flt" id="p-team-filter" onchange="renderParticipants()">
+              <option value="">كل الفرق</option>
               <option value="assigned">في فريق</option>
               <option value="unassigned">بدون فريق</option>
             </select>
           </div>
-          <span class="pill pill-orange" id="p-count">0 مشارك</span>
+          <div style="display:flex;gap:0.6rem;align-items:center">
+            <span class="pill pill-orange" id="p-count">0 مشارك</span>
+            <button class="tb-btn" onclick="exportParticipantsCSV()" style="color:var(--success);border-color:rgba(34,197,94,0.3)">⬇ CSV</button>
+          </div>
         </div>
+
+        <!-- TABLE -->
         <div class="tbl-wrap">
           <div style="overflow-x:auto">
             <table>
               <thead><tr>
                 <th>#</th><th>الاسم</th><th>الهاتف</th><th>الولاية</th>
-                <th>المستوى</th><th>الفريق</th><th>تاريخ التسجيل</th><th></th>
+                <th>الحالة</th><th>المستوى</th><th>التريكو</th><th>الفريق</th><th>تاريخ التسجيل</th><th></th>
               </tr></thead>
               <tbody id="p-tbody"></tbody>
             </table>
@@ -946,6 +976,11 @@ function login(){
   }
 }
 document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')login()});
+function clearManagerData(){
+  if(!confirm('⚠️ سيتم حذف جميع البيانات. هل أنت متأكد؟')) return;
+  ['camp_registrations','camp_teams','camp_schedule','camp_notifications','camp_judges','camp_criteria','camp_scores','camp_team_work'].forEach(k=>localStorage.removeItem(k));
+  location.reload();
+}
 function logout(){
   document.getElementById('loginScreen').style.display='flex';
   document.getElementById('app').classList.remove('show');
@@ -957,21 +992,10 @@ function logout(){
 // ══════════════════════════════════════════════════
 function save(key,val){try{localStorage.setItem(key,JSON.stringify(val))}catch(e){}}
 function load(key,def){try{const v=localStorage.getItem(key);return v?JSON.parse(v):def}catch{return def}}
-async function loadAll(){
+function loadAll(){
   // Load registrations from main site
-  // Load from Supabase
-  try {
-    const { data, error } = await db.from('registrations').select('*').order('created_at',{ascending:false});
-    if(error) throw error;
-    state.participants = data.map(r=>({...r, date:r.created_at}));
-    const dbBadge = document.getElementById('mgr-db-status');
-    if(dbBadge){dbBadge.textContent='🟢 Supabase';dbBadge.style.color='var(--success)';}
-  } catch(e) {
-    state.participants = load('camp_registrations',[]);
-    if(state.participants.length===0) state.participants = generateDemoParticipants();
-    const dbBadge = document.getElementById('mgr-db-status');
-    if(dbBadge){dbBadge.textContent='🟡 Local';dbBadge.style.color='var(--accent)';}
-  }
+  state.participants = load('camp_registrations',[]);
+  if(state.participants.length===0) state.participants = generateDemoParticipants();
   state.teams = load('camp_teams',[]);
   state.schedule = load('camp_schedule', getDefaultSchedule());
   state.notifications = load('camp_notifications',[]);
@@ -1068,32 +1092,94 @@ function startCountdown(){
 const levelMap={beginner:'مبتدئ',intermediate:'متوسط',advanced:'محترف'};
 const levelPill={beginner:'pill-blue',intermediate:'pill-orange',advanced:'pill-green'};
 
+function renderParticipantsKPIs(){
+  const total = state.participants.length;
+  const confirmed = state.participants.filter(p=>(p.status||'pending')==='confirmed').length;
+  const cancelled = state.participants.filter(p=>(p.status||'pending')==='cancelled').length;
+  const pending = state.participants.filter(p=>(p.status||'pending')==='pending').length;
+  const el = (id,v) => { const e=document.getElementById(id); if(e) e.textContent=v; };
+  el('kpi-p-total', total);
+  el('kpi-p-confirmed', confirmed);
+  el('kpi-p-cancelled', cancelled);
+  el('kpi-p-pending', pending);
+}
+
+function cycleParticipantStatus(id){
+  const p=state.participants.find(x=>x.id===id); if(!p) return;
+  const order=['pending','confirmed','cancelled'];
+  const idx=order.indexOf(p.status||'pending');
+  p.status=order[(idx+1)%order.length];
+  saveAll(); renderParticipants();
+  const labels={confirmed:'✅ تم التأكيد',cancelled:'❌ تم الإلغاء',pending:'⏳ قيد الانتظار'};
+  toast(labels[p.status]||'','info');
+}
+
+function deleteParticipant(id){
+  if(!confirm('تأكيد حذف هذا المشارك؟')) return;
+  state.participants=state.participants.filter(p=>p.id!==id);
+  // Remove from teams
+  state.teams.forEach(t=>{ if(t.members) t.members=t.members.filter(m=>m!==id); });
+  saveAll(); renderParticipants(); renderTeams(); renderOverview();
+  toast('تم الحذف','info');
+}
+
+function exportParticipantsCSV(){
+  const headers=['الاسم','الهاتف','الإيميل','الولاية','المستوى','التريكو','الحالة','الفريق','تاريخ التسجيل'];
+  const rows=state.participants.map(p=>{
+    const team=getTeamOfParticipant(p.id);
+    return [p.name,p.phone||'',p.email||'',p.wilaya||'',levelMap[p.level]||p.level||'',p.size||'',p.status||'pending',team?.name||'',fmtDate(p.date)];
+  });
+  const csv='\uFEFF'+[headers,...rows].map(r=>r.join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download='campecom-participants.csv';
+  a.click();
+  toast('تم تصدير القائمة ✓','success');
+}
+
 function renderParticipants(){
+  renderParticipantsKPIs();
   const q=document.getElementById('p-search').value.toLowerCase();
   const lv=document.getElementById('p-level').value;
   const tf=document.getElementById('p-team-filter').value;
+  const sf=document.getElementById('p-status-filter')?.value||'';
   let data=state.participants.filter(p=>{
-    const ms=!q||p.name.includes(q)||p.phone.includes(q)||(p.email||'').toLowerCase().includes(q);
+    const ms=!q||p.name.includes(q)||(p.phone||'').includes(q)||(p.email||'').toLowerCase().includes(q);
     const ml=!lv||p.level===lv;
     const mt=!tf||(tf==='assigned'?getTeamOfParticipant(p.id):!getTeamOfParticipant(p.id));
-    return ms&&ml&&mt;
+    const mst=!sf||(p.status||'pending')===sf;
+    return ms&&ml&&mt&&mst;
   });
   document.getElementById('p-count').textContent=`${data.length} مشارك`;
   const tbody=document.getElementById('p-tbody');
-  if(!data.length){tbody.innerHTML=`<tr><td colspan="8" style="text-align:center;padding:3rem;color:var(--muted)">لا يوجد نتائج</td></tr>`;return;}
+  if(!data.length){tbody.innerHTML=`<tr><td colspan="10" style="text-align:center;padding:3rem;color:var(--muted)">لا يوجد نتائج</td></tr>`;return;}
+
+  const statusMap={
+    confirmed:{label:'مؤكد ✅', row:'background:rgba(34,197,94,0.04);border-right:3px solid var(--success)'},
+    cancelled:{label:'ملغي ❌',  row:'background:rgba(239,68,68,0.06);border-right:3px solid var(--danger)'},
+    pending:  {label:'انتظار ⏳',row:''},
+  };
+
   tbody.innerHTML=data.sort((a,b)=>new Date(b.date)-new Date(a.date)).map((p,i)=>{
     const team=getTeamOfParticipant(p.id);
-    return`<tr>
+    const st=statusMap[p.status||'pending']||statusMap.pending;
+    return`<tr style="${st.row}">
       <td style="color:var(--muted);font-size:0.78rem">${i+1}</td>
       <td><div style="font-weight:700">${p.name}</div><div style="font-size:0.75rem;color:var(--muted)">${p.email||'—'}</div></td>
-      <td dir="ltr" style="color:var(--muted);font-size:0.82rem">${p.phone}</td>
+      <td dir="ltr" style="color:var(--muted);font-size:0.82rem">${p.phone||'—'}</td>
       <td>${p.wilaya||'—'}</td>
+      <td><span class="pill pill-gray" style="cursor:pointer" onclick="cycleParticipantStatus(${JSON.stringify(p.id)})" title="اضغط لتغيير الحالة">${st.label}</span></td>
       <td><span class="pill ${levelPill[p.level]||'pill-gray'}">${levelMap[p.level]||p.level||'—'}</span></td>
+      <td>${p.size?`<span class="pill pill-gray" style="font-size:0.7rem">${p.size}</span>`:'—'}</td>
       <td>${team?`<span class="pill pill-green">${team.name}</span>`:'<span class="pill pill-gray">غير مُسنَد</span>'}</td>
       <td style="font-size:0.75rem;color:var(--muted)">${fmtDate(p.date)}</td>
-      <td><button class="btn-sm" onclick="quickAssign(${JSON.stringify(p.id)})">إسناد ←</button></td>
+      <td style="display:flex;gap:4px;align-items:center">
+        <button class="btn-sm" onclick="quickAssign(${JSON.stringify(p.id)})">إسناد ←</button>
+        <button class="btn-sm danger" onclick="deleteParticipant(${JSON.stringify(p.id)})" title="حذف" style="color:var(--danger);border-color:rgba(239,68,68,0.3)">🗑</button>
+      </td>
     </tr>`;}).join('');
 }
+
 
 function getTeamOfParticipant(id){
   return state.teams.find(t=>t.members&&t.members.includes(id));
@@ -1651,6 +1737,7 @@ function judgeLogin(){
   document.getElementById('loginScreen').style.display='none';
   document.getElementById('judgePortal').style.display='block';
   document.getElementById('judge-portal-name').textContent='🧑‍⚖️ '+judge.name;
+  applyJudgeLang();
   renderJudgePortal();
 }
 function judgeLogout(){
@@ -1658,6 +1745,31 @@ function judgeLogout(){
   document.getElementById('judgePortal').style.display='none';
   document.getElementById('loginScreen').style.display='flex';
   document.getElementById('judge-code').value='';
+}
+
+// ══ JUDGE PORTAL LANGUAGE ══
+var JUDGE_LANG='ar';
+var JT={
+  ar:{badge:'لجنة التحكيم',title:'قيّم الفرق',desc:'شوف أعمال كل فريق ودخل نقاطك — تقييمك مستقل عن باقي الحكام',logout:'خروج',score_title:'✍️ تقييمك للفريق',save_btn:'حفظ التقييم ←',video_label:'🎬 الفيديو',video_btn:'▶ شوف الفيديو ←',metrics_label:'📊 مقاييس الحملة',no_video:'⚠️ ما زال ما رفعوش فيديو',no_metrics:'⚠️ ما زال ما أضافوش مقاييس',sales:'المبيعات',roas:'ROAS',reach:'Reach',clicks:'Clicks',dir:'rtl'},
+  fr:{badge:'Jury',title:'Évaluer les équipes',desc:"Consulte le travail de chaque équipe et entre tes notes — ton évaluation est indépendante",logout:'Déconnexion',score_title:'✍️ Ton évaluation',save_btn:'Enregistrer →',video_label:'🎬 Vidéo',video_btn:'▶ Voir la vidéo →',metrics_label:'📊 Métriques',no_video:'⚠️ Aucune vidéo uploadée',no_metrics:'⚠️ Aucune métrique ajoutée',sales:'Ventes',roas:'ROAS',reach:'Portée',clicks:'Clics',dir:'ltr'}
+};
+function toggleJudgeLang(){
+  JUDGE_LANG=JUDGE_LANG==='ar'?'fr':'ar';
+  applyJudgeLang();
+  if(judgeSelectedTeam) selectJudgeTeam(judgeSelectedTeam);
+}
+function applyJudgeLang(){
+  var t=JT[JUDGE_LANG];
+  var isAr=JUDGE_LANG==='ar';
+  var portal=document.getElementById('judgePortal');
+  if(portal) portal.dir=t.dir;
+  var lb=document.getElementById('judge-lang-btn'); if(lb) lb.textContent=isAr?'FR':'AR';
+  var badge=document.getElementById('judge-role-badge'); if(badge) badge.textContent=t.badge;
+  var ttl=document.getElementById('judge-title'); if(ttl) ttl.textContent=t.title;
+  var dsc=document.getElementById('judge-desc'); if(dsc) dsc.textContent=t.desc;
+  var lob=document.getElementById('judge-logout-btn'); if(lob) lob.textContent=t.logout;
+  var st=document.getElementById('judge-score-title'); if(st) st.textContent=t.score_title;
+  var sb=document.getElementById('judge-save-btn'); if(sb) sb.textContent=t.save_btn;
 }
 
 // ══ JUDGE PORTAL ══
@@ -1764,7 +1876,8 @@ function submitJudgeScores(){
   });
   saveAll();
   const team=state.teams.find(t=>String(t.id)===String(teamId));
-  toast(`✅ تم حفظ تقييمك لـ "${team?.name}"!`,'success');
+  const msg = JUDGE_LANG==='fr' ? `✅ Évaluation de "${team?.name}" enregistrée !` : `✅ تم حفظ تقييمك لـ "${team?.name}"!`;
+  toast(msg,'success');
 }
 
 // ══ TEAM WORK (admin) ══
