@@ -14,7 +14,7 @@
   --success:#22c55e;--danger:#ef4444;--info:#3b82f6;--purple:#a855f7;
   --sidebar:220px;
 }
-html{height:100%}body{min-height:100%;min-height:500px;font-family:'Cairo','Segoe UI','Tahoma',Arial,sans-serif;background:var(--bg);color:var(--text)}
+html,body{height:100%}body{font-family:'Cairo','Segoe UI','Tahoma',Arial,sans-serif;background:var(--bg);color:var(--text)}
 ::selection{background:rgba(75,142,245,0.25)}
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:var(--bg)}
@@ -47,7 +47,7 @@ html{height:100%}body{min-height:100%;min-height:500px;font-family:'Cairo','Sego
 .login-err{color:var(--danger);font-size:0.8rem;margin-top:0.7rem;display:none}
 
 /* ══════════════════════ APP SHELL ══════════════════════ */
-#app{display:none;height:100vh;flex-direction:row}
+#app{display:none;height:100%;min-height:100vh;flex-direction:row}
 #app.show{display:flex}
 
 /* SIDEBAR */
@@ -275,7 +275,7 @@ tr:hover td{background:rgba(75,142,245,0.015)}
 <div id="toast"></div>
 
 <!-- ══ LOGIN ══ -->
-<div id="loginScreen" style="min-height:600px;background:#080808;display:flex;align-items:center;justify-content:center;padding:2rem">
+<div id="loginScreen" style="position:fixed;top:0;left:0;right:0;bottom:0;background:#080808;display:flex;align-items:center;justify-content:center;padding:2rem;z-index:9999">
   <div class="login-card">
     <span style="font-size:1.1rem;font-weight:900;background:linear-gradient(90deg,#4B8EF5,#2563EB);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:1px">✕ CampEcom</span>
     <h2>منصة التسيير</h2>
