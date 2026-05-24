@@ -479,6 +479,20 @@ tr:hover td{background:rgba(91,127,255,0.02)}
 <div class="modal-bg" id="mJudge"><div class="modal">
   <button class="modal-x" onclick="closeM('mJudge')">✕</button>
   <h3>إضافة حكم</h3><p class="modal-sub">سيستخدم الكود للدخول لبوابة التحكيم</p>
+
+  <!-- Photo upload -->
+  <div style="display:flex;align-items:center;gap:1.2rem;margin-bottom:1.2rem">
+    <div id="jPhotoPreview" onclick="document.getElementById('jPhotoInput').click()"
+      style="width:72px;height:72px;border-radius:50%;background:var(--bg3);border:2px dashed var(--border2);display:flex;align-items:center;justify-content:center;font-size:2rem;cursor:pointer;overflow:hidden;flex-shrink:0;transition:border-color 0.2s"
+      title="اضغط لاختيار صورة">👤</div>
+    <input type="file" id="jPhotoInput" accept="image/*" style="display:none" onchange="prevJPhoto(this)">
+    <div>
+      <div style="font-size:0.85rem;font-weight:700;margin-bottom:4px">صورة الحكم</div>
+      <div style="font-size:0.75rem;color:var(--muted2);line-height:1.6">اضغط على الدائرة لرفع صورة<br>JPG أو PNG — حجم صغير أفضل</div>
+    </div>
+  </div>
+  <input type="hidden" id="jPhotoData">
+
   <div class="f-row">
     <div class="lf"><label>الاسم *</label><input id="jjName" placeholder="مثال: أحمد بلقايد"></div>
     <div class="lf"><label>التخصص *</label><input id="jjSpec" placeholder="مثال: Facebook Ads"></div>
@@ -546,7 +560,16 @@ tr:hover td{background:rgba(91,127,255,0.02)}
 
 <script>
 var PASS='campecom2025';
+var SB='https://bssyjcnbderxasixarol.supabase.co';
+var SK='sb_publishable_JAVCX4L3P6tlJOwwu8yr5A_5CNpRZwB';
 var S={p:[],teams:[],sched:[],judges:[],crit:[],scores:{},work:{},notifs:[],day:1,jTeam:null,assignTeam:null,curJudge:null};
+
+// ── SUPABASE HELPERS ──
+function sbH(){return{'apikey':SK,'Authorization':'Bearer '+SK,'Content-Type':'application/json'};}
+function sbGet(path){return fetch(SB+path,{headers:sbH()}).then(function(r){return r.json();});}
+function sbPatch(path,body){return fetch(SB+path,{method:'PATCH',headers:sbH(),body:JSON.stringify(body)});}
+function sbPost(path,body){return fetch(SB+path,{method:'POST',headers:Object.assign({'Prefer':'return=representation'},sbH()),body:JSON.stringify(body)}).then(function(r){return r.json();});}
+function sbDel(path){return fetch(SB+path,{method:'DELETE',headers:sbH()});}
 
 function defSched(){return[{id:1,day:1,time:'09:00',title:'استقبال المشاركين',desc:'تسجيل الحضور',type:'opening'},{id:2,day:1,time:'10:00',title:'افتتاح الحدث',desc:'كلمة اللجنة وتقديم البرنامج',type:'opening'},{id:3,day:1,time:'11:00',title:'تشكيل الفرق والتعارف',desc:'',type:'workshop'},{id:4,day:1,time:'14:00',title:'تسليم المنتجات وبدء العمل',desc:'كل فريق يحصل على منتجه',type:'competition'},{id:5,day:2,time:'09:00',title:'مراجعة صباحية مع الفرق',desc:'',type:'judging'},{id:6,day:2,time:'11:00',title:'ورشة Facebook Ads المتقدم',desc:'',type:'workshop'},{id:7,day:2,time:'14:00',title:'Content War — صناعة Reels',desc:'',type:'competition'},{id:8,day:3,time:'14:00',title:'إطلاق الحملات الإعلانية',desc:'',type:'competition'},{id:9,day:4,time:'09:00',title:'اليوم الحاسم — مبيعات نهائية',desc:'',type:'competition'},{id:10,day:4,time:'18:00',title:'حفل الختام والجوائز',desc:'إعلان الفريق الفائز',type:'closing'}];}
 function defCrit(){return[{id:1001,name:'الاستراتيجية',max:25,desc:'جودة التخطيط'},{id:1002,name:'التنفيذ',max:25,desc:'جودة الإعلانات'},{id:1003,name:'النتائج',max:30,desc:'المبيعات والـ ROAS'},{id:1004,name:'الإبداع',max:20,desc:'جودة المحتوى'}];}
@@ -578,7 +601,6 @@ document.getElementById('pw').addEventListener('keydown',function(e){if(e.key===
 function ld(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function loadAll(){
-  S.p=ld('camp_registrations',[]);
   S.teams=ld('camp_teams',[]);
   S.sched=ld('camp_schedule',defSched());
   S.judges=ld('camp_judges',[]);
@@ -586,7 +608,21 @@ function loadAll(){
   S.scores=ld('camp_scores',{});
   S.work=ld('camp_team_work',{});
   S.notifs=ld('camp_notifications',[]);
-  refreshOv();
+  // Load participants from Supabase
+  set('pCount','⏳ جاري التحميل...');
+  sbGet('/rest/v1/registrations?select=*&order=created_at.desc')
+    .then(function(data){
+      if(!Array.isArray(data)){S.p=[];toast('خطأ في تحميل البيانات','e');refreshOv();return;}
+      S.p=data.map(function(r){
+        return {id:r.id,name:r.name||'',phone:r.phone||'',email:r.email||'',
+          wilaya:r.wilaya||'',level:r.level||'beginner',size:r.size||'',
+          status:r.status||'pending',platform:r.platform||'',social:r.social||'',
+          why:r.why||'',source:r.source||'',date:r.created_at,
+          note:ld('note_'+r.id,'')};
+      });
+      refreshOv();renderP();
+    })
+    .catch(function(){toast('فشل الاتصال بـ Supabase','e');S.p=[];refreshOv();});
 }
 function saveAll(){sv('camp_teams',S.teams);sv('camp_schedule',S.sched);sv('camp_judges',S.judges);sv('camp_criteria',S.crit);sv('camp_scores',S.scores);sv('camp_team_work',S.work);sv('camp_notifications',S.notifs);}
 function svP(){sv('camp_registrations',S.p);}
@@ -699,14 +735,20 @@ function renderP(){
 function cycle(id){
   var p=S.p.find(function(x){return x.id===id;});if(!p)return;
   var o=['pending','confirmed','cancelled'];
-  p.status=o[(o.indexOf(p.status||'pending')+1)%o.length];
-  svP();renderP();refreshOv();toast('✅ تم التحديث','s');
+  var ns=o[(o.indexOf(p.status||'pending')+1)%o.length];
+  p.status=ns;renderP();refreshOv();
+  sbPatch('/rest/v1/registrations?id=eq.'+id,{status:ns})
+    .then(function(){toast('✅ '+(stLbl[ns]||ns),'s');})
+    .catch(function(){toast('فشل التحديث','e');});
 }
 function delP(id){
-  if(!confirm('حذف هذا المشارك؟'))return;
+  if(!confirm('حذف هذا المشارك نهائياً؟'))return;
   S.p=S.p.filter(function(x){return x.id!==id;});
   S.teams.forEach(function(t){if(t.members)t.members=t.members.filter(function(m){return m!==id;});});
-  svP();saveAll();renderP();renderTeams();refreshOv();toast('تم الحذف','s');
+  saveAll();renderP();renderTeams();refreshOv();
+  sbDel('/rest/v1/registrations?id=eq.'+id)
+    .then(function(){toast('تم الحذف','s');})
+    .catch(function(){toast('فشل الحذف','e');});
 }
 function exportCSV(){
   var h=['الاسم','الهاتف','الإيميل','الولاية','المستوى','التريكو','الحالة'];
@@ -815,6 +857,17 @@ function delSess(id){
 }
 
 // JUDGES
+function prevJPhoto(input){
+  var file=input.files[0];if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    document.getElementById('jPhotoData').value=e.target.result;
+    var prev=document.getElementById('jPhotoPreview');
+    prev.innerHTML='<img src="'+e.target.result+'" style="width:100%;height:100%;object-fit:cover">';
+    prev.style.borderColor='var(--accent)';
+  };
+  reader.readAsDataURL(file);
+}
 function genCode(){
   var c='abcdefghjkmnpqrstuvwxyz23456789';var r='';
   for(var i=0;i<8;i++)r+=c[Math.floor(Math.random()*c.length)];
@@ -823,9 +876,11 @@ function genCode(){
 function saveJudge(){
   var n=document.getElementById('jjName').value.trim();var s=document.getElementById('jjSpec').value.trim();var c=document.getElementById('jjCode').value.trim();
   if(!n||!s||!c){toast('املأ الحقول','e');return;}
-  S.judges.push({id:Date.now(),name:n,specialty:s,code:c,bio:document.getElementById('jjBio').value.trim()});
+  S.judges.push({id:Date.now(),name:n,specialty:s,code:c,bio:document.getElementById('jjBio').value.trim(),photo:document.getElementById('jPhotoData').value});
   saveAll();renderJudges();refreshOv();closeM('mJudge');
-  ['jjName','jjSpec','jjCode','jjBio'].forEach(function(id){document.getElementById(id).value='';});
+  ['jjName','jjSpec','jjCode','jjBio','jPhotoData'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('jPhotoPreview').innerHTML='👤';
+  document.getElementById('jPhotoPreview').style.borderColor='var(--border2)';
   toast('✅ تم إضافة الحكم','s');
 }
 function delJudge(id){
@@ -839,7 +894,7 @@ function renderJudges(){
     return '<div class="judge-card">'+
       '<div style="height:3px;background:linear-gradient(90deg,var(--accent),var(--purple))"></div>'+
       '<div style="padding:1.4rem;text-align:center">'+
-        '<div class="judge-av">👤</div>'+
+        '<div class="judge-av">'+(j.photo?'<img src="'+j.photo+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">':'👤')+'</div>'+
         '<div style="font-weight:800;font-size:0.95rem;margin-bottom:4px">'+j.name+'</div>'+
         '<span class="pill p-blue">'+j.specialty+'</span>'+
         '<div class="code-badge">🔑 '+j.code+'</div>'+
@@ -1017,8 +1072,11 @@ function renderNotifs(){
 function cycleLevel(id){
   var p=S.p.find(function(x){return x.id===id;});if(!p)return;
   var o=['beginner','intermediate','advanced'];
-  p.level=o[(o.indexOf(p.level||'beginner')+1)%o.length];
-  svP();renderP();toast('✅ '+(lvl[p.level]||p.level),'s');
+  var nl=o[(o.indexOf(p.level||'beginner')+1)%o.length];
+  p.level=nl;renderP();
+  sbPatch('/rest/v1/registrations?id=eq.'+id,{level:nl})
+    .then(function(){toast('✅ '+(lvl[nl]),'s');})
+    .catch(function(){toast('فشل التحديث','e');});
 }
 function openNote(id){
   var p=S.p.find(function(x){return x.id===id;});if(!p)return;
@@ -1031,27 +1089,30 @@ function saveNote(){
   var id=document.getElementById('noteId').value;
   var p=S.p.find(function(x){return String(x.id)===String(id);});if(!p)return;
   p.note=document.getElementById('noteText').value.trim();
-  svP();renderP();closeM('mNote');toast('✅ تم حفظ الملاحظة','s');
+  sv('note_'+id,p.note);
+  renderP();closeM('mNote');toast('✅ تم حفظ الملاحظة','s');
 }
 function addParticipant(){
   var n=document.getElementById('apName').value.trim();
-  var ph=document.getElementById('apPhone').value.trim();
   if(!n){toast('أدخل الاسم','e');return;}
-  var p={
-    id:Date.now(),
+  var body={
     name:n,
-    phone:ph,
+    phone:document.getElementById('apPhone').value.trim(),
     email:document.getElementById('apEmail').value.trim(),
     wilaya:document.getElementById('apWilaya').value.trim(),
     level:document.getElementById('apLevel').value,
     size:document.getElementById('apSize').value,
-    status:'pending',
-    note:document.getElementById('apNote').value.trim(),
-    date:new Date().toISOString()
+    status:'pending'
   };
-  S.p.push(p);svP();renderP();refreshOv();closeM('mAddP');
-  ['apName','apPhone','apEmail','apWilaya','apNote'].forEach(function(id){document.getElementById(id).value='';});
-  toast('✅ تم إضافة "'+n+'"','s');
+  sbPost('/rest/v1/registrations',body)
+    .then(function(res){
+      var r=Array.isArray(res)?res[0]:res;
+      S.p.unshift(Object.assign({id:r.id||Date.now(),date:r.created_at||new Date().toISOString(),note:''},body));
+      renderP();refreshOv();closeM('mAddP');
+      ['apName','apPhone','apEmail','apWilaya','apNote'].forEach(function(id){document.getElementById(id).value='';});
+      toast('✅ تم إضافة "'+n+'"','s');
+    })
+    .catch(function(){toast('فشل الإضافة','e');});
 }
 
 // MODALS & TOAST
