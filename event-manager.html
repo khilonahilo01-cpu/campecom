@@ -386,7 +386,7 @@ tr:hover td{background:rgba(91,127,255,0.02)}
         <div class="tb-wrap" style="overflow-x:auto">
           <table><thead><tr>
             <th>#</th><th>الاسم</th><th>الهاتف</th><th>الولاية</th>
-            <th>الحالة</th><th>المستوى</th><th>التريكو</th><th>الفريق</th><th>ملاحظة</th><th></th>
+            <th>الحالة</th><th>المستوى</th><th>التريكو</th><th>الفريق</th><th>وقت التسجيل</th><th>ملاحظة</th><th></th>
           </tr></thead><tbody id="pBody"></tbody></table>
         </div>
       </div>
@@ -724,6 +724,7 @@ function renderP(){
       '<td><span class="pill '+( lvlCls[p.level]||'p-gray')+'" style="cursor:pointer" onclick="cycleLevel('+JSON.stringify(p.id)+')" title="اضغط لتغيير المستوى">'+( lvl[p.level]||'—')+'</span></td>'+
       '<td>'+(p.size?'<span class="pill p-gray">'+p.size+'</span>':'<span style="color:var(--muted)">—</span>')+'</td>'+
       '<td>'+(team?'<span class="pill p-green">'+team.name+'</span>':'<span style="color:var(--muted);font-size:0.75rem">—</span>')+'</td>'+
+      '<td style="white-space:nowrap;font-size:0.75rem;color:var(--muted2)">'+fmtDateTime(p.date)+'</td>'+
       '<td style="max-width:160px"><div style="display:flex;align-items:center;gap:6px">'+
         '<span style="font-size:0.78rem;color:var(--muted2);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(p.note||'<span style="color:var(--muted)">—</span>')+'</span>'+
         '<button class="btn-ghost sm" onclick="openNote('+JSON.stringify(p.id)+')" style="padding:3px 8px;flex-shrink:0" title="تعديل الملاحظة">✏️</button>'+
@@ -828,12 +829,38 @@ function autoAssign(){
 
 // SCHEDULE
 var sTL={opening:{l:'افتتاح',c:'p-blue'},competition:{l:'منافسة',c:'p-red'},workshop:{l:'ورشة',c:'p-warn'},judging:{l:'تقييم',c:'p-purple'},break:{l:'استراحة',c:'p-gray'},closing:{l:'ختام',c:'p-green'}};
+function fmtDateTime(iso){
+  if(!iso)return'—';
+  var d=new Date(iso);
+  var date=d.toLocaleDateString('ar-DZ',{day:'numeric',month:'short'});
+  var time=d.toLocaleTimeString('ar-DZ',{hour:'2-digit',minute:'2-digit'});
+  return date+'<br><span style="color:var(--muted)">'+time+'</span>';
+}
+function getMaxDay(){
+  if(!S.sched.length)return 4;
+  return Math.max(4,Math.max.apply(null,S.sched.map(function(s){return s.day;})));
+}
+function addDay(){
+  var nd=getMaxDay()+1;
+  saveAll();S.day=nd;
+  document.getElementById('sDay').innerHTML=Array.from({length:nd},function(_,i){return '<option value="'+(i+1)+'">اليوم '+(i+1)+'</option>';}).join('');
+  renderSched();toast('✅ تم إضافة اليوم '+nd,'s');
+}
 function renderSched(){
   var tabs=document.getElementById('sTabs');if(!tabs)return;
-  tabs.innerHTML=[1,2,3,4].map(function(d){return '<button class="d-tab '+(S.day===d?'active':'')+'" onclick="setDay('+d+')">اليوم '+d+'</button>';}).join('');
+  var maxDay=getMaxDay();
+  var dayBtns=Array.from({length:maxDay},function(_,i){
+    var d=i+1;
+    return '<button class="d-tab '+(S.day===d?'active':'')+'" onclick="setDay('+d+')">اليوم '+d+'</button>';
+  });
+  dayBtns.push('<button class="d-tab" onclick="addDay()" style="color:var(--success);border-color:rgba(16,217,138,0.3)" title="إضافة يوم جديد">+ يوم</button>');
+  tabs.innerHTML=dayBtns.join('');
+  // Update modal day selector
+  var sd=document.getElementById('sDay');
+  if(sd)sd.innerHTML=Array.from({length:maxDay},function(_,i){return '<option value="'+(i+1)+'">اليوم '+(i+1)+'</option>';}).join('');
   var tl=document.getElementById('sTl');
   var ss=S.sched.filter(function(s){return s.day===S.day;}).sort(function(a,b){return a.time.localeCompare(b.time);});
-  if(!ss.length){tl.innerHTML='<div style="color:var(--muted);padding:2rem 0;font-size:0.88rem">لا يوجد جلسات لهذا اليوم</div>';return;}
+  if(!ss.length){tl.innerHTML='<div style="color:var(--muted);padding:2rem 0;font-size:0.88rem">لا يوجد جلسات لهذا اليوم — أضف جلسة ←</div>';return;}
   tl.innerHTML=ss.map(function(s){
     var t=sTL[s.type]||sTL.workshop;
     return '<div class="tl-item"><div class="tl-dot"></div><div class="tl-time">'+s.time+'</div><div class="tl-card">'+
