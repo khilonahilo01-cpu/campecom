@@ -1138,6 +1138,7 @@ function exportParticipantsCSV(){
 }
 
 function renderParticipants(){
+  if(!document.getElementById('p-search')) return;
   renderParticipantsKPIs();
   const q=document.getElementById('p-search').value.toLowerCase();
   const lv=document.getElementById('p-level').value;
