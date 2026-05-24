@@ -14,7 +14,7 @@
   --success:#22c55e;--danger:#ef4444;--info:#3b82f6;--purple:#a855f7;
   --sidebar:220px;
 }
-html,body{min-height:100%;font-family:'Cairo','Segoe UI','Tahoma',Arial,sans-serif;background:var(--bg);color:var(--text)}
+html{height:100%}body{min-height:100%;min-height:500px;font-family:'Cairo','Segoe UI','Tahoma',Arial,sans-serif;background:var(--bg);color:var(--text)}
 ::selection{background:rgba(75,142,245,0.25)}
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:var(--bg)}
@@ -22,8 +22,9 @@ html,body{min-height:100%;font-family:'Cairo','Segoe UI','Tahoma',Arial,sans-ser
 
 /* ══════════════════════ LOGIN ══════════════════════ */
 #loginScreen{
-  min-height:100vh;background:var(--bg);
+  min-height:100vh;min-height:500px;background:var(--bg);
   display:flex;align-items:center;justify-content:center;
+  padding:2rem;
 }
 .login-card{
   background:var(--bg2);border:1px solid var(--border2);
