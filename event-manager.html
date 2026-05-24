@@ -2,1978 +2,340 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Camp Ecom — منصة التسيير</title>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#080808;--bg2:#0f0f0f;--bg3:#161616;--bg4:#1c1c1c;
-  --border:#222;--border2:#2e2e2e;--border3:#3a3a3a;
-  --accent:#4B8EF5;--accent2:#2563EB;
-  --text:#f2ede4;--muted:#777;--muted2:#444;
-  --success:#22c55e;--danger:#ef4444;--info:#3b82f6;--purple:#a855f7;
-  --sidebar:220px;
-}
-html,body{height:100%}body{font-family:'Cairo','Segoe UI','Tahoma',Arial,sans-serif;background:var(--bg);color:var(--text)}
-::selection{background:rgba(75,142,245,0.25)}
-::-webkit-scrollbar{width:4px;height:4px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--border3);border-radius:2px}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,Arial,sans-serif}
+body{background:#080808;color:#f2ede4;min-height:100vh}
+.hide{display:none!important}
 
-/* ══════════════════════ LOGIN ══════════════════════ */
-#loginScreen{
-  min-height:100vh;min-height:500px;background:var(--bg);
-  display:flex;align-items:center;justify-content:center;
-  padding:2rem;
-}
-.login-card{
-  background:var(--bg2);border:1px solid var(--border2);
-  border-radius:20px;padding:2.5rem;width:100%;max-width:380px;text-align:center;
-}
-.login-logo{
-  font-size:0.9rem;font-weight:900;letter-spacing:1px;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  margin-bottom:0.3rem;
-}
-.login-card h2{font-size:1.4rem;font-weight:900;margin-bottom:0.3rem}
-.login-card p{color:var(--muted);font-size:0.85rem;margin-bottom:1.8rem}
+/* LOGIN */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+.login-card{background:#0f0f0f;border:1px solid #2e2e2e;border-radius:20px;padding:2.5rem;width:100%;max-width:380px;text-align:center}
+.brand{font-size:1.4rem;font-weight:900;color:#4B8EF5;margin-bottom:0.4rem}
+.login-card h2{font-size:1.3rem;margin-bottom:0.4rem}
+.login-card p{color:#777;font-size:0.85rem;margin-bottom:1.5rem}
+input,select,textarea{width:100%;background:#161616;border:1px solid #2e2e2e;border-radius:9px;padding:11px 14px;color:#f2ede4;font-size:0.92rem;outline:none}
+input:focus,select:focus,textarea:focus{border-color:#4B8EF5}
+.btn{background:linear-gradient(135deg,#4B8EF5,#2563EB);border:none;color:#000;padding:12px;border-radius:9px;font-size:0.95rem;font-weight:800;cursor:pointer;width:100%}
+.btn:hover{opacity:0.88}
+.btn-sec{background:transparent;border:1px solid #2e2e2e;color:#777;padding:9px;border-radius:8px;cursor:pointer;font-weight:700;font-size:0.85rem}
+.btn-sec:hover{border-color:#4B8EF5;color:#4B8EF5}
+.err{color:#ef4444;font-size:0.82rem;margin-top:0.7rem;display:none}
 .lf{margin-bottom:1rem;text-align:right}
-.lf label{display:block;font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:5px}
-.lf input{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:9px;padding:11px 14px;color:var(--text);font-family:'Cairo',sans-serif;font-size:0.92rem;outline:none;transition:border-color 0.2s}
-.lf input:focus{border-color:rgba(75,142,245,0.5)}
-.btn-lg{width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#000;padding:12px;border-radius:9px;font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:800;cursor:pointer;transition:opacity 0.2s;margin-top:4px}
-.btn-lg:hover{opacity:0.88}
-.login-err{color:var(--danger);font-size:0.8rem;margin-top:0.7rem;display:none}
+.lf label{display:block;font-size:0.78rem;font-weight:700;color:#777;margin-bottom:5px}
+.divider{border-top:1px solid #222;margin:1.2rem 0 1rem;padding-top:1rem}
 
-/* ══════════════════════ APP SHELL ══════════════════════ */
-#app{display:none;height:100%;min-height:100vh;flex-direction:row}
-#app.show{display:flex}
+/* APP */
+.app-shell{min-height:100vh;display:flex}
+.sidebar{width:220px;background:#0f0f0f;border-left:1px solid #222;padding:1.2rem 0.8rem;flex-shrink:0}
+.sb-brand{font-size:1rem;font-weight:900;color:#4B8EF5;margin-bottom:1.5rem;padding:0 0.5rem}
+.sb-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;cursor:pointer;font-size:0.85rem;font-weight:600;color:#777;margin-bottom:2px;transition:all 0.2s}
+.sb-item:hover{background:#1c1c1c;color:#f2ede4}
+.sb-item.active{background:rgba(75,142,245,0.1);color:#4B8EF5}
+.sb-bottom{margin-top:auto;padding-top:1rem;border-top:1px solid #222}
 
-/* SIDEBAR */
-.sidebar{
-  width:var(--sidebar);flex-shrink:0;
-  background:var(--bg2);border-left:1px solid var(--border);
-  display:flex;flex-direction:column;height:100vh;
-  position:sticky;top:0;overflow-y:auto;
-}
-.sb-brand{padding:1.4rem 1.2rem;border-bottom:1px solid var(--border)}
-.sb-logo{font-size:0.82rem;font-weight:900;letter-spacing:0.5px;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.sb-role{font-size:0.7rem;color:var(--muted);margin-top:2px}
-.sb-nav{padding:1rem 0.7rem;flex:1}
-.sb-section{font-size:0.65rem;font-weight:700;color:var(--muted2);letter-spacing:1.5px;padding:0.8rem 0.6rem 0.4rem;text-transform:uppercase}
-.sb-item{
-  display:flex;align-items:center;gap:10px;
-  padding:9px 10px;border-radius:9px;cursor:pointer;
-  font-size:0.85rem;font-weight:600;color:var(--muted);
-  transition:all 0.2s;margin-bottom:2px;border:1px solid transparent;
-}
-.sb-item:hover{background:var(--bg3);color:var(--text)}
-.sb-item.active{background:rgba(75,142,245,0.08);color:var(--accent);border-color:rgba(75,142,245,0.15)}
-.sb-icon{font-size:1rem;width:20px;text-align:center}
-.sb-badge{margin-right:auto;background:var(--accent);color:#000;font-size:0.65rem;font-weight:800;padding:2px 7px;border-radius:100px}
-.sb-bottom{padding:1rem;border-top:1px solid var(--border)}
-.btn-logout-sm{width:100%;background:transparent;border:1px solid var(--border2);color:var(--muted);padding:8px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;transition:all 0.2s}
-.btn-logout-sm:hover{border-color:var(--danger);color:var(--danger)}
+.main{flex:1;padding:1.5rem;overflow-x:auto}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
+h1{font-size:1.3rem;font-weight:800}
+h2{font-size:1.1rem;font-weight:800;margin-bottom:1rem}
 
-/* MAIN AREA */
-.main-area{flex:1;display:flex;flex-direction:column;overflow:hidden}
-.topbar{
-  height:58px;background:var(--bg2);border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;
-  flex-shrink:0;
-}
-.tb-title{font-size:1rem;font-weight:800}
-.tb-right{display:flex;align-items:center;gap:0.8rem}
-.tb-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--muted);padding:6px 14px;border-radius:7px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;transition:all 0.2s}
-.tb-btn:hover{border-color:var(--accent);color:var(--accent)}
-.tb-btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#000}
-.tb-btn.primary:hover{opacity:0.88;color:#000}
+/* KPIs */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:0.8rem;margin-bottom:1.5rem}
+.kpi{background:#0f0f0f;border:1px solid #222;border-radius:12px;padding:1rem;text-align:center}
+.kpi-val{font-size:1.8rem;font-weight:900;color:#4B8EF5}
+.kpi-lbl{font-size:0.75rem;color:#777;margin-top:3px}
 
-.content{flex:1;overflow-y:auto;padding:1.5rem}
-.page{display:none}
-.page.active{display:block;animation:fadeUp 0.3s ease both}
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-
-/* ══════════════════════ SHARED COMPONENTS ══════════════════════ */
-.section-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem;flex-wrap:wrap;gap:0.8rem}
-.section-hd h2{font-size:1.1rem;font-weight:800}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
-.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
-@media(max-width:900px){.grid-4{grid-template-columns:1fr 1fr}.grid-3{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.2rem}
-.card-title{font-size:0.78rem;font-weight:700;color:var(--muted);letter-spacing:0.5px;margin-bottom:0.5rem}
-.card-val{font-size:2rem;font-weight:900;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
-.card-sub{font-size:0.75rem;color:var(--muted);margin-top:4px}
-.card-accent{position:relative;overflow:hidden}
-.card-accent::before{content:'';position:absolute;inset-x:0;top:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
-
-/* Table */
-.tbl-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:1rem}
-.tbl-hd{background:var(--bg3);padding:0.9rem 1.2rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
-.tbl-hd h3{font-size:0.88rem;font-weight:800}
+/* TABLE */
+.tb-wrap{background:#0f0f0f;border:1px solid #222;border-radius:12px;overflow:hidden;margin-top:1rem}
 table{width:100%;border-collapse:collapse}
-th{text-align:right;padding:10px 14px;font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.5px;border-bottom:1px solid var(--border);background:var(--bg3);white-space:nowrap}
-td{padding:10px 14px;font-size:0.83rem;border-bottom:1px solid var(--border);vertical-align:middle}
+th{text-align:right;padding:10px 14px;font-size:0.75rem;font-weight:700;color:#777;border-bottom:1px solid #222;background:#161616}
+td{padding:10px 14px;font-size:0.85rem;border-bottom:1px solid #222}
 tr:last-child td{border-bottom:none}
-tr:hover td{background:rgba(75,142,245,0.015)}
+tr:hover td{background:rgba(75,142,245,0.03)}
 
-/* Pills */
 .pill{display:inline-block;padding:3px 10px;border-radius:100px;font-size:0.7rem;font-weight:700}
-.pill-green{background:rgba(34,197,94,0.1);color:var(--success);border:1px solid rgba(34,197,94,0.2)}
-.pill-orange{background:rgba(75,142,245,0.1);color:var(--accent);border:1px solid rgba(75,142,245,0.2)}
-.pill-blue{background:rgba(59,130,246,0.1);color:#60a5fa;border:1px solid rgba(59,130,246,0.2)}
-.pill-red{background:rgba(239,68,68,0.1);color:var(--danger);border:1px solid rgba(239,68,68,0.2)}
-.pill-purple{background:rgba(168,85,247,0.1);color:#c084fc;border:1px solid rgba(168,85,247,0.2)}
-.pill-gray{background:var(--bg3);color:var(--muted);border:1px solid var(--border2)}
+.pill-green{background:rgba(34,197,94,0.1);color:#22c55e;border:1px solid rgba(34,197,94,0.2)}
+.pill-orange{background:rgba(75,142,245,0.1);color:#4B8EF5;border:1px solid rgba(75,142,245,0.2)}
+.pill-red{background:rgba(239,68,68,0.1);color:#ef4444;border:1px solid rgba(239,68,68,0.2)}
+.pill-gray{background:#161616;color:#777;border:1px solid #2e2e2e}
 
-/* Btn small */
-.btn-sm{background:transparent;border:1px solid var(--border2);color:var(--muted);padding:4px 12px;border-radius:7px;cursor:pointer;font-family:'Cairo',sans-serif;font-size:0.75rem;font-weight:700;transition:all 0.2s}
-.btn-sm:hover{border-color:var(--accent);color:var(--accent)}
-.btn-sm.danger:hover{border-color:var(--danger);color:var(--danger)}
+.toolbar{display:flex;gap:0.6rem;flex-wrap:wrap;margin-bottom:1rem;align-items:center}
+.toolbar input,.toolbar select{flex:1;min-width:150px;max-width:250px}
 
-/* Form elements */
-.f-group{margin-bottom:1rem}
-.f-group label{display:block;font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:5px}
-.f-group input,.f-group select,.f-group textarea{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:9px;padding:10px 13px;color:var(--text);font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s;resize:none}
-.f-group input:focus,.f-group select:focus,.f-group textarea:focus{border-color:rgba(75,142,245,0.5)}
-.f-group input::placeholder,.f-group textarea::placeholder{color:var(--muted2)}
-.f-group select option{background:var(--bg3)}
-.f-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:#161616;border:1px solid #2e2e2e;border-radius:10px;padding:12px 18px;font-size:0.88rem;z-index:1000;display:none;animation:in 0.3s ease}
+.toast.success{border-color:rgba(34,197,94,0.3);color:#22c55e}
+.toast.error{border-color:rgba(239,68,68,0.3);color:#ef4444}
+.toast.show{display:block}
+@keyframes in{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
 
-/* Modal */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);z-index:500;display:none;align-items:center;justify-content:center;padding:1rem}
-.modal-overlay.open{display:flex;animation:fadeIn 0.2s ease}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:1.8rem;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;position:relative;animation:slideUp 0.25s ease}
-@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.modal-close{position:absolute;top:1rem;left:1rem;background:var(--border);border:none;color:var(--muted);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:0.85rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
-.modal-close:hover{background:var(--border2);color:var(--text)}
-.modal h3{font-size:1.1rem;font-weight:900;margin-bottom:0.3rem}
-.modal .modal-sub{font-size:0.82rem;color:var(--muted);margin-bottom:1.5rem}
-.modal-footer{display:flex;gap:0.8rem;margin-top:1.5rem;justify-content:flex-start}
-
-/* Toast */
-#toast{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9998;display:flex;flex-direction:column;gap:0.5rem;pointer-events:none}
-.toast-item{background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:10px 16px;font-size:0.85rem;font-weight:600;display:flex;align-items:center;gap:8px;animation:toastIn 0.3s ease;min-width:200px;pointer-events:auto}
-.toast-item.success{border-color:rgba(34,197,94,0.3);color:var(--success)}
-.toast-item.error{border-color:rgba(239,68,68,0.3);color:var(--danger)}
-.toast-item.info{border-color:rgba(75,142,245,0.3);color:var(--accent)}
-@keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
-
-/* ══════════════════════ OVERVIEW ══════════════════════ */
-.welcome-banner{
-  background:linear-gradient(135deg,rgba(75,142,245,0.08),rgba(37,99,235,0.05));
-  border:1px solid rgba(75,142,245,0.15);border-radius:14px;
-  padding:1.5rem;margin-bottom:1.5rem;
-  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
-}
-.welcome-text h2{font-size:1.2rem;font-weight:900;margin-bottom:0.2rem}
-.welcome-text p{font-size:0.85rem;color:var(--muted)}
-.event-countdown{display:flex;gap:0.8rem}
-.ec-box{background:rgba(0,0,0,0.3);border:1px solid rgba(75,142,245,0.2);border-radius:8px;padding:8px 14px;text-align:center;min-width:54px}
-.ec-num{font-size:1.4rem;font-weight:900;color:var(--accent);line-height:1}
-.ec-lbl{font-size:0.62rem;color:var(--muted);font-weight:700}
-
-/* Activity feed */
-.feed-item{display:flex;gap:12px;padding:0.8rem 0;border-bottom:1px solid var(--border);align-items:flex-start}
-.feed-item:last-child{border-bottom:none}
-.feed-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
-.feed-content p{font-size:0.83rem;line-height:1.5}
-.feed-content span{font-size:0.72rem;color:var(--muted)}
-
-/* ══════════════════════ TEAMS ══════════════════════ */
-.teams-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-top:1rem}
-.team-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color 0.2s}
-.team-card:hover{border-color:var(--border3)}
-.team-header{padding:1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
-.team-color{width:12px;height:12px;border-radius:50%;flex-shrink:0}
-.team-name{font-size:0.95rem;font-weight:800;flex:1}
-.team-body{padding:1rem}
-.member-item{display:flex;align-items:center;gap:8px;padding:5px 0}
-.avatar{width:28px;height:28px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:var(--accent);flex-shrink:0}
-.member-name{font-size:0.82rem;font-weight:600}
-.member-role{font-size:0.7rem;color:var(--muted)}
-.team-footer{padding:0.8rem 1rem;border-top:1px solid var(--border);display:flex;gap:0.5rem}
-
-/* ══════════════════════ SCHEDULE ══════════════════════ */
-.day-tabs{display:flex;gap:0.5rem;margin-bottom:1.2rem;flex-wrap:wrap}
-.day-tab{padding:7px 16px;border-radius:8px;border:1px solid var(--border2);color:var(--muted);font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;transition:all 0.2s;background:transparent}
-.day-tab:hover{border-color:var(--accent);color:var(--accent)}
-.day-tab.active{background:rgba(75,142,245,0.1);border-color:rgba(75,142,245,0.4);color:var(--accent)}
-.timeline-wrap{position:relative;padding-right:1.5rem}
-.timeline-wrap::before{content:'';position:absolute;right:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--accent),transparent)}
-.tl-item{position:relative;padding-bottom:1.5rem;padding-right:1.5rem}
-.tl-dot{position:absolute;right:-1.95rem;top:3px;width:14px;height:14px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);flex-shrink:0}
-.tl-time{font-size:0.72rem;font-weight:700;color:var(--accent);margin-bottom:3px}
-.tl-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1rem;transition:border-color 0.2s}
-.tl-card:hover{border-color:var(--border3)}
-.tl-card h4{font-size:0.9rem;font-weight:800;margin-bottom:4px}
-.tl-card p{font-size:0.8rem;color:var(--muted);line-height:1.6}
-.tl-tags{display:flex;gap:0.4rem;margin-top:0.5rem;flex-wrap:wrap}
-
-/* ══════════════════════ NOTIFICATIONS ══════════════════════ */
-.notif-list{display:flex;flex-direction:column;gap:0.8rem;margin-top:1rem}
-.notif-item{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.2rem;transition:border-color 0.2s}
-.notif-item:hover{border-color:var(--border3)}
-.notif-top{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:0.5rem}
-.notif-title{font-size:0.9rem;font-weight:800}
-.notif-meta{display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap}
-.notif-text{font-size:0.83rem;color:var(--muted);line-height:1.7}
-.notif-actions{display:flex;gap:0.5rem;margin-top:0.8rem}
-.notif-scheduled{font-size:0.75rem;color:var(--muted);margin-top:6px;display:flex;align-items:center;gap:5px}
-
-/* Compose area */
-.compose-box{background:var(--bg2);border:1px solid rgba(75,142,245,0.2);border-radius:14px;padding:1.5rem;margin-bottom:1.5rem}
-.compose-box h3{font-size:0.92rem;font-weight:800;margin-bottom:1rem}
-.channel-opts{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.5rem}
-.ch-opt{padding:6px 14px;border-radius:8px;border:1px solid var(--border2);color:var(--muted);font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;transition:all 0.2s;background:transparent}
-.ch-opt.sel{background:rgba(75,142,245,0.08);border-color:rgba(75,142,245,0.4);color:var(--accent)}
-.btn-send{background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#000;padding:10px 24px;border-radius:9px;font-family:'Cairo',sans-serif;font-size:0.88rem;font-weight:800;cursor:pointer;transition:opacity 0.2s}
-.btn-send:hover{opacity:0.88}
-
-/* ══════════════════════ PARTICIPANTS ══════════════════════ */
-.search-bar{background:var(--bg2);border:1px solid var(--border2);border-radius:9px;padding:9px 14px;color:var(--text);font-family:'Cairo',sans-serif;font-size:0.88rem;outline:none;transition:border-color 0.2s;width:100%;max-width:300px}
-.search-bar:focus{border-color:rgba(75,142,245,0.4)}
-.search-bar::placeholder{color:var(--muted2)}
-.flt{background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'Cairo',sans-serif;font-size:0.82rem;outline:none;cursor:pointer}
-.flt option{background:var(--bg3)}
-
-/* ══ MOBILE ══ */
 @media(max-width:768px){
-  .sidebar{display:none}
-  .main-area{width:100%}
-  .topbar{padding:0 1rem;height:54px}
-  .content{padding:1rem}
-  .grid-4{grid-template-columns:1fr 1fr!important}
-  .grid-2{grid-template-columns:1fr!important}
-  .f-row{grid-template-columns:1fr!important}
-  .section-hd{flex-direction:column;align-items:flex-start}
+  .sidebar{width:60px;padding:1rem 0.4rem}
+  .sb-item{justify-content:center;font-size:0;padding:9px 6px}
+  .sb-item span:first-child{font-size:1.2rem}
+  .sb-brand{font-size:0;text-align:center}
+  .sb-brand::before{content:'⚡';font-size:1.5rem}
+  .kpis{grid-template-columns:1fr 1fr}
+  .main{padding:1rem}
   table{font-size:0.78rem}
   th,td{padding:8px 10px}
-  .tbl-wrap{overflow-x:auto}
-  .day-tabs{gap:0.4rem}
-  .day-tab{padding:6px 12px;font-size:0.78rem}
-  .teams-grid{grid-template-columns:1fr!important}
-  .compose-box{padding:1.2rem}
-  .modal{padding:1.2rem 1rem;margin:0.5rem}
-}
-@media(max-width:480px){
-  .grid-4{grid-template-columns:1fr!important}
-  .tb-title{font-size:0.88rem}
-  .tb-btn{padding:5px 10px;font-size:0.75rem}
-  .card-val{font-size:1.8rem}
 }
 </style>
-
 </head>
 <body>
 
-<!-- ══ TOAST ══ -->
-<div id="toast"></div>
-
 <!-- ══ LOGIN ══ -->
-<div id="loginScreen" style="position:fixed;top:0;left:0;right:0;bottom:0;background:#080808;display:flex;align-items:center;justify-content:center;padding:2rem;z-index:9999">
+<div id="login" class="login-wrap">
   <div class="login-card">
-    <span style="font-size:1.1rem;font-weight:900;background:linear-gradient(90deg,#4B8EF5,#2563EB);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:1px">✕ CampEcom</span>
+    <div class="brand">✕ CampEcom</div>
     <h2>منصة التسيير</h2>
     <p>خاص بفريق التنظيم فقط</p>
     <div class="lf">
       <label>كلمة المرور</label>
-      <input type="password" id="pw" placeholder="••••••••" onkeydown="if(event.key==='Enter')login()">
+      <input type="password" id="pw" placeholder="••••••••">
     </div>
-    <button class="btn-lg" onclick="login()">← دخول</button>
-    <div class="login-err" id="lerr">كلمة المرور غلط ❌</div>
-    <div style="margin-top:1.2rem;border-top:1px solid var(--border);padding-top:1rem">
-      <p style="color:var(--muted);font-size:0.8rem;margin-bottom:0.6rem">أنت مشارك؟</p>
-      <button onclick="showPublic()" style="width:100%;background:transparent;border:1px solid rgba(75,142,245,0.3);color:var(--accent);padding:10px;border-radius:9px;font-family:Cairo,sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;transition:all 0.2s" onmouseover="this.style.background='rgba(75,142,245,0.08)'" onmouseout="this.style.background='transparent'">📅 عرض برنامج الحدث</button>
-    </div>
-    <div style="margin-top:0.8rem">
-      <p style="color:var(--muted);font-size:0.8rem;margin-bottom:0.6rem">أنت حكم؟</p>
-      <div style="display:flex;gap:8px">
-        <input type="password" id="judge-code" placeholder="أدخل كودك الخاص" style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:9px;padding:10px 12px;color:var(--text);font-family:'Cairo',sans-serif;font-size:0.88rem;outline:none" onkeydown="if(event.key==='Enter')judgeLogin()">
-        <button onclick="judgeLogin()" style="background:rgba(75,142,245,0.12);border:1px solid rgba(75,142,245,0.3);color:var(--accent);padding:10px 16px;border-radius:9px;font-family:'Cairo',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;white-space:nowrap">دخول ←</button>
-      </div>
-      <div class="login-err" id="judge-err">الكود غلط ❌</div>
-    </div>
-  </div>
-</div>
-
-
-<!-- ══ PUBLIC PROGRAMME ══ -->
-<div id="publicScreen" style="display:none;min-height:100vh;background:var(--bg);padding:0">
-  <!-- Public Topbar -->
-  <div style="background:var(--bg2);border-bottom:1px solid var(--border);padding:0 5%;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50">
-    <div style="display:flex;align-items:center;gap:12px">
-      <span style="font-size:1.1rem;font-weight:900;background:linear-gradient(90deg,#4B8EF5,#2563EB);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:1px">✕ CampEcom</span>
-      <span style="font-size:0.78rem;font-weight:700;color:var(--muted);background:rgba(75,142,245,0.08);border:1px solid rgba(75,142,245,0.2);padding:3px 10px;border-radius:100px">برنامج الحدث</span>
-    </div>
-    <button onclick="hidePublic()" style="background:transparent;border:1px solid var(--border2);color:var(--muted);padding:6px 14px;border-radius:8px;font-family:Cairo,sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer">← رجوع</button>
-  </div>
-  
-  <div style="max-width:700px;margin:0 auto;padding:2rem 1.5rem">
-    <!-- Header -->
-    <div style="text-align:center;margin-bottom:2.5rem">
-      <div style="display:inline-block;background:rgba(75,142,245,0.08);border:1px solid rgba(75,142,245,0.2);color:var(--accent);font-size:0.75rem;font-weight:700;padding:5px 14px;border-radius:100px;margin-bottom:1rem;letter-spacing:1px">4 JOURS · 4 أيام</div>
-      <h1 style="font-size:2rem;font-weight:900;margin-bottom:0.5rem">برنامج الحدث</h1>
-      <p style="color:var(--muted);font-size:0.9rem">البرنامج التفصيلي ليومياتك في المخيم</p>
-    </div>
-
-    <!-- Day Tabs -->
-    <div id="pub-day-tabs" style="display:flex;gap:0.5rem;margin-bottom:2rem;flex-wrap:wrap"></div>
-    
-    <!-- Timeline -->
-    <div id="pub-timeline" style="position:relative;padding-right:1.5rem">
-      <div style="position:absolute;right:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--accent),transparent)"></div>
-    </div>
-  </div>
-</div>
-
-<!-- ══ JUDGE PORTAL ══ -->
-<div id="judgePortal" style="display:none;min-height:100vh;background:var(--bg)">
-  <div style="background:var(--bg2);border-bottom:1px solid var(--border);padding:0 5%;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50">
-    <div style="display:flex;align-items:center;gap:12px">
-      <span id="judge-portal-name" style="font-size:1rem;font-weight:800;color:var(--accent)"></span>
-      <span id="judge-role-badge" style="background:rgba(75,142,245,0.1);border:1px solid rgba(75,142,245,0.2);color:var(--accent);font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:100px">لجنة التحكيم</span>
-    </div>
-    <div style="display:flex;align-items:center;gap:0.8rem">
-      <button onclick="toggleJudgeLang()" id="judge-lang-btn" style="background:transparent;border:1px solid var(--border2);color:var(--muted);padding:6px 14px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:800;cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--muted)'">FR</button>
-      <button onclick="judgeLogout()" id="judge-logout-btn" style="background:transparent;border:1px solid var(--border2);color:var(--muted);padding:7px 16px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer">خروج</button>
-  </div>
-  <div style="max-width:820px;margin:0 auto;padding:2rem 1.5rem">
-    <div style="margin-bottom:1.5rem">
-      <div style="font-size:0.72rem;font-weight:700;color:var(--accent);letter-spacing:1px;margin-bottom:0.4rem">التحكيم</div>
-      <h2 id="judge-title" style="font-size:1.4rem;font-weight:900;margin-bottom:0.3rem">قيّم الفرق</h2>
-      <p id="judge-desc" style="color:var(--muted);font-size:0.85rem">شوف أعمال كل فريق ودخل نقاطك — تقييمك مستقل عن باقي الحكام</p>
-    </div>
-    <!-- Team selector -->
-    <div style="display:flex;gap:0.6rem;flex-wrap:wrap;margin-bottom:1.5rem" id="judge-team-tabs"></div>
-    <!-- Team work display -->
-    <div id="judge-team-content"></div>
-    <!-- Score form -->
-    <div id="judge-score-section" style="display:none;margin-top:1.5rem">
-      <div id="judge-score-title" style="font-size:0.85rem;font-weight:800;color:var(--muted);margin-bottom:1rem;letter-spacing:0.5px">✍️ تقييمك للفريق</div>
-      <div id="judge-score-form"></div>
-      <button id="judge-save-btn" onclick="submitJudgeScores()" style="margin-top:1.2rem;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#000;padding:12px 28px;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:800;cursor:pointer;width:100%">حفظ التقييم ←</button>
+    <button class="btn" onclick="doLogin()">← دخول</button>
+    <div class="err" id="err">كلمة المرور غلط ❌</div>
+    <div class="divider">
+      <p style="font-size:0.78rem;color:#777;margin-bottom:0.6rem">أنت مشارك؟</p>
+      <button class="btn-sec" style="width:100%" onclick="alert('برنامج الحدث قريباً 📅')">📅 عرض برنامج الحدث</button>
     </div>
   </div>
 </div>
 
 <!-- ══ APP ══ -->
-<div id="app">
-
-  <!-- SIDEBAR -->
+<div id="app" class="app-shell hide">
   <aside class="sidebar">
-    <div class="sb-brand">
-      <span style="font-size:1.1rem;font-weight:900;background:linear-gradient(90deg,#4B8EF5,#2563EB);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:1px">✕ CampEcom</span>
-      <div class="sb-role">لوحة التسيير</div>
-    </div>
-    <nav class="sb-nav">
-      <div class="sb-section">الرئيسية</div>
-      <div class="sb-item active" onclick="nav('overview')"><span class="sb-icon">🏠</span> نظرة عامة</div>
-
-      <div class="sb-section">الحدث</div>
-      <div class="sb-item" onclick="nav('participants')"><span class="sb-icon">👥</span> المشاركون</div>
-      <div class="sb-item" onclick="nav('teams')"><span class="sb-icon">⚡</span> الفرق</div>
-      <div class="sb-item" onclick="nav('schedule')"><span class="sb-icon">📅</span> البرنامج</div>
-      <div class="sb-item" onclick="nav('judges')"><span class="sb-icon">🧑‍⚖️</span> لجنة الحكام</div>
-      <div class="sb-item" onclick="nav('judging')"><span class="sb-icon">🏆</span> التحكيم</div>
-
-      <div class="sb-section">التواصل</div>
-      <div class="sb-item" onclick="nav('notifications')">
-        <span class="sb-icon">🔔</span> الإشعارات
-        <span class="sb-badge" id="notif-badge">0</span>
-      </div>
-    </nav>
+    <div class="sb-brand">✕ CampEcom</div>
+    <div class="sb-item active" onclick="nav('overview')"><span>🏠</span> <span>نظرة عامة</span></div>
+    <div class="sb-item" onclick="nav('participants')"><span>👥</span> <span>المشاركون</span></div>
+    <div class="sb-item" onclick="nav('teams')"><span>⚡</span> <span>الفرق</span></div>
+    <div class="sb-item" onclick="nav('schedule')"><span>📅</span> <span>البرنامج</span></div>
     <div class="sb-bottom">
-      <a href="admin.html" style="display:block;width:100%;background:transparent;border:1px solid var(--border2);color:var(--muted);padding:8px;border-radius:8px;font-family:Cairo,sans-serif;font-size:0.8rem;font-weight:700;text-decoration:none;text-align:center;margin-bottom:8px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--muted)'">📊 لوحة الأدمين</a>
-    <button onclick="clearManagerData()" style="width:100%;background:transparent;border:1px solid rgba(239,68,68,0.2);color:var(--danger);padding:8px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;margin-bottom:6px;transition:all 0.2s">🗑 مسح البيانات</button>
-    <button class="btn-logout-sm" onclick="logout()">تسجيل الخروج</button>
+      <button class="btn-sec" style="width:100%" onclick="logout()">خروج</button>
     </div>
   </aside>
 
-  <!-- MAIN -->
-  <div class="main-area">
-    <div class="topbar">
-      <div class="tb-title" id="topbarTitle">نظرة عامة</div>
-      <div class="tb-right">
-        <button class="tb-btn" id="topbarAction" style="display:none"></button>
-        <button class="tb-btn primary" id="topbarPrimary" style="display:none"></button>
+  <main class="main">
+    <!-- OVERVIEW -->
+    <div id="page-overview">
+      <div class="topbar">
+        <h1>نظرة عامة 👋</h1>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><div class="kpi-val" id="kpi-total">0</div><div class="kpi-lbl">إجمالي المسجلين</div></div>
+        <div class="kpi"><div class="kpi-val" style="color:#22c55e" id="kpi-conf">0</div><div class="kpi-lbl">مؤكدون ✅</div></div>
+        <div class="kpi"><div class="kpi-val" style="color:#ef4444" id="kpi-canc">0</div><div class="kpi-lbl">ملغيون ❌</div></div>
+        <div class="kpi"><div class="kpi-val" id="kpi-pend">0</div><div class="kpi-lbl">قيد الانتظار ⏳</div></div>
+      </div>
+      <div style="background:#0f0f0f;border:1px solid #222;border-radius:12px;padding:1.5rem">
+        <h2>🚀 معلومات الحدث</h2>
+        <div style="color:#777;font-size:0.9rem;line-height:1.8">
+          <p>📅 <strong>التاريخ:</strong> سبتمبر 2026</p>
+          <p>📍 <strong>المكان:</strong> الجزائر العاصمة</p>
+          <p>👥 <strong>المشاركون المستهدفون:</strong> 100-150</p>
+          <p>⏱ <strong>المدة:</strong> 4 أيام</p>
+        </div>
       </div>
     </div>
 
-    <div class="content">
-
-      <!-- ══ OVERVIEW ══ -->
-      <div class="page active" id="page-overview">
-        <div class="welcome-banner">
-          <div class="welcome-text">
-            <h2>أهلاً بفريق التنظيم 👋</h2>
-            <p>الحدث يقترب — كل شيء تحت السيطرة</p>
-          </div>
-          <div class="event-countdown" id="eventCountdown"></div>
-        </div>
-
-        <div class="grid-4" style="margin-bottom:1.2rem">
-          <div class="card card-accent">
-            <div class="card-title">إجمالي المسجلين</div>
-            <div class="card-val" id="ov-total">0</div>
-            <div class="card-sub">من جميع الولايات</div>
-          </div>
-          <div class="card card-accent">
-            <div class="card-title">الفرق المشكّلة</div>
-            <div class="card-val" id="ov-teams">0</div>
-            <div class="card-sub">فريق جاهز</div>
-          </div>
-          <div class="card card-accent">
-            <div class="card-title">إشعارات أُرسلت</div>
-            <div class="card-val" id="ov-notifs">0</div>
-            <div class="card-sub">هذا الأسبوع</div>
-          </div>
-          <div class="card card-accent">
-            <div class="card-title">أيام الحدث</div>
-            <div class="card-val" style="-webkit-text-fill-color:var(--text)">4</div>
-            <div class="card-sub">يوم تنافسي</div>
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <div class="card">
-            <div style="font-size:0.85rem;font-weight:800;margin-bottom:1rem">🕐 آخر النشاطات</div>
-            <div id="activity-feed">
-              <div class="feed-item"><div class="feed-dot" style="background:var(--accent)"></div><div class="feed-content"><p>لا يوجد نشاط بعد</p><span>—</span></div></div>
-            </div>
-          </div>
-          <div class="card">
-            <div style="font-size:0.85rem;font-weight:800;margin-bottom:1rem">📋 مهام سريعة</div>
-            <div style="display:flex;flex-direction:column;gap:0.6rem">
-              <button class="tb-btn" style="text-align:right" onclick="nav('participants')">← عرض المسجلين الجدد</button>
-              <button class="tb-btn" style="text-align:right" onclick="openCreateTeam()">← إنشاء فريق جديد</button>
-              <button class="tb-btn" style="text-align:right" onclick="nav('notifications')">← إرسال إشعار للمشاركين</button>
-              <button class="tb-btn" style="text-align:right" onclick="nav('schedule')">← مراجعة البرنامج</button>
-            </div>
-          </div>
-        </div>
+    <!-- PARTICIPANTS -->
+    <div id="page-participants" class="hide">
+      <div class="topbar">
+        <h1>المشاركون</h1>
+        <button class="btn-sec" onclick="exportCSV()" style="color:#22c55e;border-color:rgba(34,197,94,0.3)">⬇ CSV</button>
       </div>
-
-      <!-- ══ PARTICIPANTS ══ -->
-      <div class="page" id="page-participants">
-
-        <!-- KPIs -->
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.8rem;margin-bottom:1.2rem">
-          <div class="card" style="text-align:center;padding:1rem">
-            <div style="font-size:1.8rem;font-weight:900;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text" id="kpi-p-total">0</div>
-            <div style="font-size:0.75rem;color:var(--muted);margin-top:2px">إجمالي المسجلين</div>
-          </div>
-          <div class="card" style="text-align:center;padding:1rem">
-            <div style="font-size:1.8rem;font-weight:900;color:var(--success)" id="kpi-p-confirmed">0</div>
-            <div style="font-size:0.75rem;color:var(--muted);margin-top:2px">مؤكدون ✅</div>
-          </div>
-          <div class="card" style="text-align:center;padding:1rem">
-            <div style="font-size:1.8rem;font-weight:900;color:var(--danger)" id="kpi-p-cancelled">0</div>
-            <div style="font-size:0.75rem;color:var(--muted);margin-top:2px">ملغيون ❌</div>
-          </div>
-          <div class="card" style="text-align:center;padding:1rem">
-            <div style="font-size:1.8rem;font-weight:900;color:var(--accent)" id="kpi-p-pending">0</div>
-            <div style="font-size:0.75rem;color:var(--muted);margin-top:2px">قيد الانتظار ⏳</div>
-          </div>
-        </div>
-
-        <!-- TOOLBAR -->
-        <div class="section-hd" style="margin-bottom:1rem">
-          <div style="display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap">
-            <input class="search-bar" id="p-search" placeholder="🔍 بحث باسم، هاتف، إيميل..." oninput="renderParticipants()">
-            <select class="flt" id="p-level" onchange="renderParticipants()">
-              <option value="">كل المستويات</option>
-              <option value="beginner">مبتدئ</option>
-              <option value="intermediate">متوسط</option>
-              <option value="advanced">محترف</option>
-            </select>
-            <select class="flt" id="p-status-filter" onchange="renderParticipants()">
-              <option value="">كل الحالات</option>
-              <option value="confirmed">مؤكد ✅</option>
-              <option value="pending">قيد الانتظار ⏳</option>
-              <option value="cancelled">ملغي ❌</option>
-            </select>
-            <select class="flt" id="p-team-filter" onchange="renderParticipants()">
-              <option value="">كل الفرق</option>
-              <option value="assigned">في فريق</option>
-              <option value="unassigned">بدون فريق</option>
-            </select>
-          </div>
-          <div style="display:flex;gap:0.6rem;align-items:center">
-            <span class="pill pill-orange" id="p-count">0 مشارك</span>
-            <button class="tb-btn" onclick="exportParticipantsCSV()" style="color:var(--success);border-color:rgba(34,197,94,0.3)">⬇ CSV</button>
-          </div>
-        </div>
-
-        <!-- TABLE -->
-        <div class="tbl-wrap">
-          <div style="overflow-x:auto">
-            <table>
-              <thead><tr>
-                <th>#</th><th>الاسم</th><th>الهاتف</th><th>الولاية</th>
-                <th>الحالة</th><th>المستوى</th><th>التريكو</th><th>الفريق</th><th>تاريخ التسجيل</th><th></th>
-              </tr></thead>
-              <tbody id="p-tbody"></tbody>
-            </table>
-          </div>
-        </div>
+      <div class="kpis">
+        <div class="kpi"><div class="kpi-val" id="p-total">0</div><div class="kpi-lbl">الإجمالي</div></div>
+        <div class="kpi"><div class="kpi-val" style="color:#22c55e" id="p-conf">0</div><div class="kpi-lbl">مؤكد ✅</div></div>
+        <div class="kpi"><div class="kpi-val" style="color:#ef4444" id="p-canc">0</div><div class="kpi-lbl">ملغي ❌</div></div>
+        <div class="kpi"><div class="kpi-val" id="p-pend">0</div><div class="kpi-lbl">انتظار ⏳</div></div>
       </div>
-
-      <!-- ══ TEAMS ══ -->
-      <div class="page" id="page-teams">
-        <div class="section-hd">
-          <h2>الفرق التنافسية</h2>
-          <button class="tb-btn primary" onclick="openCreateTeam()">+ إنشاء فريق</button>
-        </div>
-        <div id="unassigned-bar" style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-radius:10px;padding:0.9rem 1.2rem;margin-bottom:1rem;display:flex;justify-content:space-between;align-items:center;font-size:0.85rem">
-          <span>⚠️ <strong id="unassigned-count">0</strong> مشارك بدون فريق بعد</span>
-          <button class="btn-sm" onclick="autoAssign()">توزيع تلقائي</button>
-        </div>
-        <div class="teams-grid" id="teams-grid">
-          <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);font-size:0.9rem">
-            لا يوجد فرق بعد — اضغط "+ إنشاء فريق" للبدء
-          </div>
-        </div>
-      </div>
-
-      <!-- ══ SCHEDULE ══ -->
-      <div class="page" id="page-schedule">
-        <div class="section-hd">
-          <h2>برنامج الحدث</h2>
-          <button class="tb-btn primary" onclick="openAddSession()">+ إضافة جلسة</button>
-        </div>
-        <div class="day-tabs" id="day-tabs"></div>
-        <div class="timeline-wrap" id="schedule-timeline"></div>
-      </div>
-
-      <!-- ══ JUDGES ══ -->
-      <div class="page" id="page-judges">
-        <div class="section-hd">
-          <h2>لجنة الحكام</h2>
-          <button class="tb-btn primary" onclick="openAddJudge()">+ إضافة حكم</button>
-        </div>
-        <div id="judges-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem;margin-top:1rem">
-          <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);font-size:0.9rem">لا يوجد حكام بعد — اضغط "+ إضافة حكم"</div>
-        </div>
-      </div>
-
-      <!-- ══ JUDGING ══ -->
-      <div class="page" id="page-judging">
-
-        <!-- TABS -->
-        <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap">
-          <button class="day-tab active" id="jtab-criteria" onclick="switchJTab('criteria')">⚙️ معايير التحكيم</button>
-          <button class="day-tab" id="jtab-work" onclick="switchJTab('work')">🎬 أعمال الفرق</button>
-          <button class="day-tab" id="jtab-score" onclick="switchJTab('score')">✍️ إدخال النقاط</button>
-          <button class="day-tab" id="jtab-board" onclick="switchJTab('board')">📊 Leaderboard</button>
-        </div>
-
-        <!-- ── CRITERIA ── -->
-        <div id="jtab-criteria-content">
-          <div class="section-hd">
-            <h2>معايير التحكيم</h2>
-            <button class="tb-btn primary" onclick="openAddCriteria()">+ إضافة معيار</button>
-          </div>
-          <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1.5rem">حدّد المعايير والنقاط القصوى لكل معيار — الحكام سيتبعونها عند التقييم.</p>
-          <div id="criteria-list" style="display:flex;flex-direction:column;gap:0.8rem"></div>
-          <div id="criteria-total" style="margin-top:1.2rem;text-align:left;font-size:0.85rem;color:var(--muted)"></div>
-        </div>
-
-        <!-- ── TEAM WORK ── -->
-        <div id="jtab-work-content" style="display:none">
-          <div class="section-hd">
-            <h2>أعمال الفرق</h2>
-            <p style="color:var(--muted);font-size:0.82rem">أضف الفيديوهات ومقاييس الحملة لكل فريق — الحكام سيشوفونها عند التقييم</p>
-          </div>
-          <div id="team-work-list" style="display:flex;flex-direction:column;gap:1rem;margin-top:1rem"></div>
-        </div>
-
-        <!-- ── SCORE ENTRY ── -->
-        <div id="jtab-score-content" style="display:none">
-          <div class="section-hd">
-            <h2>إدخال النقاط</h2>
-          </div>
-          <div style="display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap">
-            <div style="flex:1;min-width:200px">
-              <label style="font-size:0.78rem;font-weight:700;color:var(--muted);display:block;margin-bottom:5px">الحكم</label>
-              <select id="score-judge" class="flt" style="width:100%" onchange="renderScoreForm()">
-                <option value="">اختر الحكم</option>
-              </select>
-            </div>
-            <div style="flex:1;min-width:200px">
-              <label style="font-size:0.78rem;font-weight:700;color:var(--muted);display:block;margin-bottom:5px">الفريق</label>
-              <select id="score-team" class="flt" style="width:100%" onchange="renderScoreForm()">
-                <option value="">اختر الفريق</option>
-              </select>
-            </div>
-          </div>
-          <div id="score-form"></div>
-        </div>
-
-        <!-- ── LEADERBOARD ── -->
-        <div id="jtab-board-content" style="display:none">
-          <div class="section-hd">
-            <h2>Leaderboard</h2>
-            
-          <div style="display:flex;gap:0.8rem;flex-wrap:wrap">
-            <button class="tb-btn" onclick="renderLeaderboard()">🔄 تحديث</button>
-            <button class="tb-btn" onclick="exportJudgeScoresCSV()" style="color:var(--success);border-color:rgba(34,197,94,0.3)">⬇ تصدير CSV</button>
-          </div>
-          </div>
-          <div id="leaderboard-content"></div>
-        </div>
-
-      </div>
-
-      <!-- ══ NOTIFICATIONS ══ -->
-      <div class="page" id="page-notifications">
-        <div class="compose-box">
-          <h3>✏️ إرسال إشعار جديد</h3>
-          <div class="f-row">
-            <div class="f-group">
-              <label>عنوان الإشعار *</label>
-              <input type="text" id="n-title" placeholder="مثال: تذكير بموعد الحدث">
-            </div>
-            <div class="f-group">
-              <label>الأولوية</label>
-              <select id="n-priority">
-                <option value="normal">عادي</option>
-                <option value="important">مهم</option>
-                <option value="urgent">عاجل 🔴</option>
-              </select>
-            </div>
-          </div>
-          <div class="f-group">
-            <label>نص الإشعار *</label>
-            <textarea id="n-body" rows="3" placeholder="اكتب رسالتك هنا..."></textarea>
-          </div>
-          <div class="f-group">
-            <label>الجمهور المستهدف</label>
-            <div class="channel-opts">
-              <button class="ch-opt sel" onclick="toggleTarget(this,'all')">الكل</button>
-              <button class="ch-opt" onclick="toggleTarget(this,'beginner')">المبتدئون</button>
-              <button class="ch-opt" onclick="toggleTarget(this,'intermediate')">المتوسطون</button>
-              <button class="ch-opt" onclick="toggleTarget(this,'advanced')">المحترفون</button>
-            </div>
-          </div>
-          <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
-            <button class="btn-send" onclick="sendNotif()">← إرسال الإشعار</button>
-            <span style="font-size:0.78rem;color:var(--muted)">سيظهر في سجل الإشعارات ويمكن مشاركته مع المشاركين</span>
-          </div>
-        </div>
-
-        <div class="section-hd">
-          <h2>سجل الإشعارات</h2>
-          <span class="pill pill-orange" id="notif-count-lbl">0 إشعار</span>
-        </div>
-        <div class="notif-list" id="notif-list">
-          <div style="text-align:center;padding:3rem;color:var(--muted);font-size:0.88rem">
-            لا يوجد إشعارات بعد — أرسل أول إشعار من الأعلى
-          </div>
-        </div>
-      </div>
-
-    </div><!-- end content -->
-  </div><!-- end main-area -->
-</div><!-- end app -->
-
-<!-- ══ MODALS ══ -->
-
-<!-- Create Team -->
-<div class="modal-overlay" id="modal-team">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('modal-team')">✕</button>
-    <h3>إنشاء فريق جديد</h3>
-    <div class="modal-sub">سيظهر الفريق في قائمة الفرق ويمكنك إضافة أعضاء له</div>
-    <div class="f-group">
-      <label>اسم الفريق *</label>
-      <input type="text" id="t-name" placeholder="مثال: فريق النسور">
-    </div>
-    <div class="f-row">
-      <div class="f-group">
-        <label>لون الفريق</label>
-        <select id="t-color">
-          <option value="#4B8EF5">🟠 برتقالي</option>
-          <option value="#3b82f6">🔵 أزرق</option>
-          <option value="#22c55e">🟢 أخضر</option>
-          <option value="#ef4444">🔴 أحمر</option>
-          <option value="#a855f7">🟣 بنفسجي</option>
-          <option value="#ec4899">🩷 وردي</option>
+      <div class="toolbar">
+        <input type="text" id="search" placeholder="🔍 بحث باسم، هاتف..." oninput="render()">
+        <select id="fStatus" onchange="render()">
+          <option value="">كل الحالات</option>
+          <option value="confirmed">مؤكد ✅</option>
+          <option value="pending">انتظار ⏳</option>
+          <option value="cancelled">ملغي ❌</option>
         </select>
-      </div>
-      <div class="f-group">
-        <label>عدد الأعضاء القصوى</label>
-        <input type="number" id="t-max" value="6" min="2" max="10">
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-send" onclick="createTeam()">إنشاء الفريق ←</button>
-      <button class="tb-btn" onclick="closeModal('modal-team')">إلغاء</button>
-    </div>
-  </div>
-</div>
-
-<!-- Add Session -->
-<div class="modal-overlay" id="modal-session">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('modal-session')">✕</button>
-    <h3>إضافة جلسة للبرنامج</h3>
-    <div class="modal-sub">ستضاف للجدول الزمني ليوم الحدث المحدد</div>
-    <div class="f-row">
-      <div class="f-group">
-        <label>اليوم</label>
-        <select id="s-day">
-          <option value="1">اليوم 1</option>
-          <option value="2">اليوم 2</option>
-          <option value="3">اليوم 3</option>
-          <option value="4">اليوم 4</option>
+        <select id="fLevel" onchange="render()">
+          <option value="">كل المستويات</option>
+          <option value="beginner">مبتدئ</option>
+          <option value="intermediate">متوسط</option>
+          <option value="advanced">محترف</option>
         </select>
+        <span class="pill pill-orange" id="count">0 مشارك</span>
       </div>
-      <div class="f-group">
-        <label>التوقيت</label>
-        <input type="time" id="s-time" value="09:00">
+      <div class="tb-wrap" style="overflow-x:auto">
+        <table>
+          <thead><tr>
+            <th>#</th><th>الاسم</th><th>الهاتف</th><th>الولاية</th>
+            <th>الحالة</th><th>المستوى</th><th>التريكو</th><th>التاريخ</th><th></th>
+          </tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
       </div>
     </div>
-    <div class="f-group">
-      <label>عنوان الجلسة *</label>
-      <input type="text" id="s-title" placeholder="مثال: افتتاح الحدث وتشكيل الفرق">
+
+    <!-- TEAMS -->
+    <div id="page-teams" class="hide">
+      <div class="topbar"><h1>الفرق</h1></div>
+      <div style="background:#0f0f0f;border:1px solid #222;border-radius:12px;padding:2rem;text-align:center;color:#777">
+        قسم الفرق — قيد الإعداد
+      </div>
     </div>
-    <div class="f-group">
-      <label>وصف مختصر</label>
-      <textarea id="s-desc" rows="2" placeholder="تفاصيل الجلسة..."></textarea>
+
+    <!-- SCHEDULE -->
+    <div id="page-schedule" class="hide">
+      <div class="topbar"><h1>البرنامج</h1></div>
+      <div style="background:#0f0f0f;border:1px solid #222;border-radius:12px;padding:2rem;text-align:center;color:#777">
+        قسم البرنامج — قيد الإعداد
+      </div>
     </div>
-    <div class="f-group">
-      <label>نوع الجلسة</label>
-      <select id="s-type">
-        <option value="opening">افتتاح</option>
-        <option value="competition">منافسة</option>
-        <option value="workshop">ورشة عمل</option>
-        <option value="judging">تقييم</option>
-        <option value="break">استراحة</option>
-        <option value="closing">ختام</option>
-      </select>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-send" onclick="addSession()">إضافة ←</button>
-      <button class="tb-btn" onclick="closeModal('modal-session')">إلغاء</button>
-    </div>
-  </div>
+  </main>
 </div>
 
-<!-- Assign Member -->
-<div class="modal-overlay" id="modal-assign">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('modal-assign')">✕</button>
-    <h3>إضافة عضو للفريق</h3>
-    <div class="modal-sub" id="assign-team-name">اختر مشاركاً من قائمة المسجلين</div>
-    <input class="search-bar" style="width:100%;margin-bottom:1rem" id="assign-search" placeholder="🔍 ابحث بالاسم..." oninput="renderAssignList()">
-    <div id="assign-list" style="max-height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:0.5rem"></div>
-  </div>
-</div>
-
-<!-- Add Criteria Modal -->
-<div class="modal-overlay" id="modal-criteria">
-  <div class="modal" style="max-width:460px">
-    <button class="modal-close" onclick="closeModal('modal-criteria')">✕</button>
-    <h3>إضافة معيار تحكيم</h3>
-    <div class="modal-sub">سيستخدمه الحكام عند تقييم كل فريق</div>
-    <div class="f-group">
-      <label>اسم المعيار *</label>
-      <input type="text" id="c-name" placeholder="مثال: الاستراتيجية التسويقية">
-    </div>
-    <div class="f-row">
-      <div class="f-group">
-        <label>النقاط القصوى *</label>
-        <input type="number" id="c-max" value="20" min="1" max="100">
-      </div>
-      <div class="f-group">
-        <label>الوصف (اختياري)</label>
-        <input type="text" id="c-desc" placeholder="مثال: جودة الإعلان والتارقتينغ">
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-send" onclick="saveCriteria()">حفظ ←</button>
-      <button class="tb-btn" onclick="closeModal('modal-criteria')">إلغاء</button>
-    </div>
-  </div>
-</div>
-
-<!-- Add/Edit Judge Modal -->
-<div class="modal-overlay" id="modal-judge">
-  <div class="modal" style="max-width:540px">
-    <button class="modal-close" onclick="closeModal('modal-judge')">✕</button>
-    <h3 id="judge-modal-title">إضافة حكم جديد</h3>
-    <div class="modal-sub">ستظهر بطاقة الحكم في قسم لجنة الحكام</div>
-
-    <!-- Photo Upload -->
-    <div style="display:flex;align-items:center;gap:1.2rem;margin-bottom:1.5rem">
-      <div id="judge-avatar-preview" onclick="document.getElementById('judge-photo-input').click()" style="width:72px;height:72px;border-radius:50%;background:var(--bg3);border:2px dashed var(--border2);display:flex;align-items:center;justify-content:center;font-size:1.8rem;cursor:pointer;overflow:hidden;flex-shrink:0;transition:border-color 0.2s" title="اضغط لرفع صورة">👤</div>
-      <input type="file" id="judge-photo-input" accept="image/*" style="display:none" onchange="previewJudgePhoto(this)">
-      <div>
-        <div style="font-size:0.85rem;font-weight:700;margin-bottom:4px">صورة الحكم</div>
-        <div style="font-size:0.75rem;color:var(--muted);line-height:1.6">اضغط على الدائرة لرفع صورة<br>JPG أو PNG · حجم صغير أفضل</div>
-        <button onclick="document.getElementById('judge-photo-input').click()" class="btn-sm" style="margin-top:6px">رفع صورة ←</button>
-      </div>
-    </div>
-
-    <div class="f-row">
-      <div class="f-group">
-        <label>الاسم الكامل *</label>
-        <input type="text" id="j-name" placeholder="مثال: أيمن بوزيان">
-      </div>
-      <div class="f-group">
-        <label>التخصص *</label>
-        <input type="text" id="j-specialty" placeholder="مثال: Facebook Ads Expert">
-      </div>
-    </div>
-    <div class="f-group">
-      <label>🔑 كود الدخول الخاص بالحكم *</label>
-      <div style="display:flex;gap:8px">
-        <input type="text" id="j-code" placeholder="مثال: judge2026" dir="ltr" style="flex:1">
-        <button type="button" onclick="genCode()" style="background:var(--bg3);border:1px solid var(--border2);color:var(--muted);padding:0 14px;border-radius:9px;cursor:pointer;font-family:Cairo,sans-serif;font-size:0.82rem;font-weight:700;white-space:nowrap;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--muted)'">توليد تلقائي</button>
-      </div>
-    </div>
-    <div class="f-group">
-      <label>وصف قصير</label>
-      <textarea id="j-bio" rows="2" placeholder="خبرة 5 سنوات في التجارة الإلكترونية..."></textarea>
-    </div>
-    <div class="f-row">
-      <div class="f-group">
-        <label>Instagram</label>
-        <input type="text" id="j-instagram" placeholder="@username" dir="ltr">
-      </div>
-      <div class="f-group">
-        <label>LinkedIn أو TikTok</label>
-        <input type="text" id="j-social2" placeholder="@username أو رابط" dir="ltr">
-      </div>
-    </div>
-    <input type="hidden" id="j-photo-data">
-    <input type="hidden" id="j-edit-id">
-    <div class="modal-footer">
-      <button class="btn-send" onclick="saveJudge()">حفظ ←</button>
-      <button class="tb-btn" onclick="closeModal('modal-judge')">إلغاء</button>
-    </div>
-  </div>
-</div>
+<div id="toast" class="toast"></div>
 
 <script>
-// ══ JUDGES ══
-function openAddJudge(){
-  document.getElementById('judge-modal-title').textContent='إضافة حكم جديد';
-  ['j-name','j-specialty','j-bio','j-instagram','j-social2','j-photo-data','j-edit-id','j-code'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('judge-avatar-preview').innerHTML='👤';
-  document.getElementById('judge-avatar-preview').style.border='2px dashed var(--border2)';
-  openModal('modal-judge');
-}
-function previewJudgePhoto(input){
-  const file=input.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    document.getElementById('j-photo-data').value=e.target.result;
-    const prev=document.getElementById('judge-avatar-preview');
-    prev.innerHTML=`<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover">`;
-    prev.style.border='2px solid var(--accent)';
-  };
-  reader.readAsDataURL(file);
-}
-function saveJudge(){
-  const name=document.getElementById('j-name').value.trim();
-  const specialty=document.getElementById('j-specialty').value.trim();
-  const code=document.getElementById('j-code').value.trim();
-  if(!name||!specialty){toast('الاسم والتخصص مطلوبان','error');return;}
-  if(!code){toast('كود الدخول مطلوب','error');return;}
-  const editId=document.getElementById('j-edit-id').value;
-  const judge={id:editId?parseInt(editId):Date.now(),name,specialty,code,
-    bio:document.getElementById('j-bio').value.trim(),
-    instagram:document.getElementById('j-instagram').value.trim(),
-    social2:document.getElementById('j-social2').value.trim(),
-    photo:document.getElementById('j-photo-data').value};
-  if(!state.judges) state.judges=[];
-  if(editId){const idx=state.judges.findIndex(j=>j.id===parseInt(editId));if(idx>-1)state.judges[idx]=judge;}
-  else state.judges.push(judge);
-  saveAll();renderJudges();closeModal('modal-judge');
-  toast(`تم ${editId?'تحديث':'إضافة'} الحكم "${name}" ✓`,'success');
-}
-function editJudge(id){
-  const j=state.judges.find(x=>x.id===id);if(!j)return;
-  document.getElementById('judge-modal-title').textContent='تعديل بيانات الحكم';
-  document.getElementById('j-name').value=j.name;
-  document.getElementById('j-specialty').value=j.specialty;
-  document.getElementById('j-bio').value=j.bio||'';
-  document.getElementById('j-instagram').value=j.instagram||'';
-  document.getElementById('j-social2').value=j.social2||'';
-  document.getElementById('j-photo-data').value=j.photo||'';
-  document.getElementById('j-edit-id').value=j.id;
-  const prev=document.getElementById('judge-avatar-preview');
-  if(j.photo){prev.innerHTML=`<img src="${j.photo}" style="width:100%;height:100%;object-fit:cover">`;prev.style.border='2px solid var(--accent)';}
-  else{prev.innerHTML='👤';prev.style.border='2px dashed var(--border2)';}
-  openModal('modal-judge');
-}
-function deleteJudge(id){
-  if(!confirm('تأكيد حذف هذا الحكم؟'))return;
-  state.judges=state.judges.filter(j=>j.id!==id);
-  saveAll();renderJudges();toast('تم حذف الحكم','info');
-}
-function renderJudges(){
-  if(!state.judges)state.judges=[];
-  const grid=document.getElementById('judges-grid');
-  if(!state.judges.length){
-    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);font-size:0.9rem">لا يوجد حكام بعد — اضغط "+ إضافة حكم"</div>';
-    return;
-  }
-  grid.innerHTML=state.judges.map(j=>`
-    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color 0.2s" onmouseover="this.style.borderColor='var(--border3)'" onmouseout="this.style.borderColor='var(--border)'">
-      <div style="height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2))"></div>
-      <div style="padding:1.5rem;text-align:center">
-        <div style="width:80px;height:80px;border-radius:50%;margin:0 auto 1rem;overflow:hidden;border:3px solid rgba(75,142,245,0.3);background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:2rem">
-          ${j.photo?`<img src="${j.photo}" style="width:100%;height:100%;object-fit:cover">`:'👤'}
-        </div>
-        <div style="font-size:1rem;font-weight:800;margin-bottom:4px">${j.name}</div>
-        <div style="display:inline-block;background:rgba(75,142,245,0.08);border:1px solid rgba(75,142,245,0.2);color:var(--accent);font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:100px;margin-bottom:0.5rem">${j.specialty}</div>
-        ${j.code?`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:4px 10px;font-size:0.72rem;color:var(--muted);margin-bottom:0.6rem;direction:ltr;text-align:center">🔑 ${j.code}</div>`:''}
-        ${j.bio?`<div style="font-size:0.8rem;color:var(--muted);line-height:1.7;margin-bottom:0.8rem">${j.bio}</div>`:''}
-        <div style="display:flex;justify-content:center;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap">
-          ${j.instagram?`<a href="https://instagram.com/${j.instagram.replace('@','')}" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background:var(--bg3);border:1px solid var(--border2);color:var(--muted);padding:4px 10px;border-radius:8px;font-size:0.75rem;font-weight:700;text-decoration:none" onmouseover="this.style.color='var(--accent)';this.style.borderColor='var(--accent)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border2)'">📸 ${j.instagram}</a>`:''}
-          ${j.social2?`<a href="${j.social2.startsWith('http')?j.social2:'#'}" target="_blank" style="display:inline-flex;align-items:center;gap:5px;background:var(--bg3);border:1px solid var(--border2);color:var(--muted);padding:4px 10px;border-radius:8px;font-size:0.75rem;font-weight:700;text-decoration:none" onmouseover="this.style.color='var(--accent)';this.style.borderColor='var(--accent)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border2)'">🔗 ${j.social2}</a>`:''}
-        </div>
-        <div style="display:flex;gap:0.5rem;justify-content:center">
-          <button class="btn-sm" onclick="editJudge(${j.id})">✏️ تعديل</button>
-          <button class="btn-sm danger" onclick="deleteJudge(${j.id})">🗑 حذف</button>
-        </div>
-      </div>
-    </div>`).join('');
-}
+var PASS='campecom2025';
+var data=[];
 
-// ══════════════════════════════════════════════════
-const PASS = 'campecom2025';
-let state = {
-  participants: [],
-  teams: [],
-  schedule: [],
-  notifications: [],
-  judges: [],
-  criteria: [],
-  scores: {},   // scores[judgeId][teamId][criteriaId] = value
-  currentDay: 1,
-  assigningTeamId: null,
-};
-
-// ══════════════════════════════════════════════════
-//  AUTH
-// ══════════════════════════════════════════════════
-function login(){
-  if(document.getElementById('pw').value === PASS){
-    document.getElementById('loginScreen').style.display='none';
-    document.getElementById('app').classList.add('show');
-    loadAll();
+function doLogin(){
+  if(document.getElementById('pw').value===PASS){
+    document.getElementById('login').classList.add('hide');
+    document.getElementById('app').classList.remove('hide');
+    load();
   } else {
-    const e=document.getElementById('lerr'); e.style.display='block';
-    setTimeout(()=>e.style.display='none',2000);
+    var e=document.getElementById('err');
+    e.style.display='block';
+    setTimeout(function(){e.style.display='none'},2500);
   }
 }
-document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')login()});
-function clearManagerData(){
-  if(!confirm('⚠️ سيتم حذف جميع البيانات. هل أنت متأكد؟')) return;
-  ['camp_registrations','camp_teams','camp_schedule','camp_notifications','camp_judges','camp_criteria','camp_scores','camp_team_work'].forEach(k=>localStorage.removeItem(k));
-  location.reload();
-}
+
 function logout(){
-  document.getElementById('loginScreen').style.display='flex';
-  document.getElementById('app').classList.remove('show');
+  document.getElementById('app').classList.add('hide');
+  document.getElementById('login').classList.remove('hide');
   document.getElementById('pw').value='';
 }
 
-// ══════════════════════════════════════════════════
-//  STORAGE
-// ══════════════════════════════════════════════════
-function save(key,val){try{localStorage.setItem(key,JSON.stringify(val))}catch(e){}}
-function load(key,def){try{const v=localStorage.getItem(key);return v?JSON.parse(v):def}catch{return def}}
-function loadAll(){
-  // Load registrations from main site
-  state.participants = load('camp_registrations',[]);
-  if(state.participants.length===0) state.participants = generateDemoParticipants();
-  state.teams = load('camp_teams',[]);
-  state.schedule = load('camp_schedule', getDefaultSchedule());
-  state.notifications = load('camp_notifications',[]);
-  state.judges = load('camp_judges',[]);
-  state.criteria = load('camp_criteria', getDefaultCriteria());
-  state.scores = load('camp_scores',{});
-  state.teamWork = load('camp_team_work',{});
-  state.currentJudge = null;
-  refreshAll();
-}
-function saveAll(){
-  save('camp_teams', state.teams);
-  save('camp_schedule', state.schedule);
-  save('camp_notifications', state.notifications);
-  save('camp_judges', state.judges);
-  save('camp_criteria', state.criteria);
-  save('camp_scores', state.scores);
+document.getElementById('pw').addEventListener('keydown',function(e){
+  if(e.key==='Enter') doLogin();
+});
+
+function nav(p){
+  ['overview','participants','teams','schedule'].forEach(function(x){
+    document.getElementById('page-'+x).classList.toggle('hide',x!==p);
+  });
+  document.querySelectorAll('.sb-item').forEach(function(it){it.classList.remove('active')});
+  event.target.closest('.sb-item').classList.add('active');
+  if(p==='participants') render();
 }
 
-// ══════════════════════════════════════════════════
-//  NAVIGATION
-// ══════════════════════════════════════════════════
-const pageTitles = {overview:'نظرة عامة',participants:'المشاركون',teams:'الفرق',schedule:'البرنامج',judges:'لجنة الحكام',judging:'التحكيم',notifications:'الإشعارات'};
-function nav(page){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
-  document.getElementById('page-'+page).classList.add('active');
-  document.querySelector(`.sb-item[onclick="nav('${page}')"]`).classList.add('active');
-  document.getElementById('topbarTitle').textContent = pageTitles[page]||page;
-  if(page==='participants') renderParticipants();
-  if(page==='teams') renderTeams();
-  if(page==='schedule') renderSchedule();
-  if(page==='judges') renderJudges();
-  if(page==='judging') renderJudging();
-  if(page==='notifications') renderNotifications();
+function load(){
+  try{ data=JSON.parse(localStorage.getItem('camp_registrations'))||[]; }catch(e){ data=[]; }
+  renderKPIs();
+  render();
 }
 
-// ══════════════════════════════════════════════════
-//  REFRESH ALL
-// ══════════════════════════════════════════════════
-function refreshAll(){
-  renderOverview();
-  renderParticipants();
-  renderTeams();
-  renderSchedule();
-  renderJudges();
-  renderNotifications();
-  startCountdown();
+function renderKPIs(){
+  var t=data.length;
+  var c=data.filter(function(p){return (p.status||'pending')==='confirmed'}).length;
+  var x=data.filter(function(p){return (p.status||'pending')==='cancelled'}).length;
+  var pn=data.filter(function(p){return (p.status||'pending')==='pending'}).length;
+  ['kpi-total','p-total'].forEach(function(id){ var e=document.getElementById(id); if(e)e.textContent=t; });
+  ['kpi-conf','p-conf'].forEach(function(id){ var e=document.getElementById(id); if(e)e.textContent=c; });
+  ['kpi-canc','p-canc'].forEach(function(id){ var e=document.getElementById(id); if(e)e.textContent=x; });
+  ['kpi-pend','p-pend'].forEach(function(id){ var e=document.getElementById(id); if(e)e.textContent=pn; });
 }
 
-// ══════════════════════════════════════════════════
-//  OVERVIEW
-// ══════════════════════════════════════════════════
-function renderOverview(){
-  document.getElementById('ov-total').textContent = state.participants.length;
-  document.getElementById('ov-teams').textContent = state.teams.length;
-  document.getElementById('ov-notifs').textContent = state.notifications.length;
-  // Activity feed
-  const allActivities = [
-    ...state.notifications.slice(-3).map(n=>({type:'notif',text:`إشعار أُرسل: "${n.title}"`,time:n.date,color:'var(--accent)'})),
-    ...state.participants.slice(-3).map(p=>({type:'reg',text:`تسجيل جديد: ${p.name}`,time:p.date,color:'var(--success)'})),
-    ...state.teams.slice(-2).map(t=>({type:'team',text:`فريق جديد: ${t.name}`,time:t.created,color:'var(--info)'})),
-  ].sort((a,b)=>new Date(b.time)-new Date(a.time)).slice(0,6);
+var levelMap={beginner:'مبتدئ',intermediate:'متوسط',advanced:'محترف'};
+var statusMap={
+  confirmed:{lbl:'مؤكد ✅',cls:'pill-green'},
+  cancelled:{lbl:'ملغي ❌',cls:'pill-red'},
+  pending:{lbl:'انتظار ⏳',cls:'pill-gray'}
+};
 
-  const feed = document.getElementById('activity-feed');
-  if(allActivities.length===0){
-    feed.innerHTML='<div class="feed-item"><div class="feed-dot" style="background:var(--muted2)"></div><div class="feed-content"><p style="color:var(--muted)">لا يوجد نشاط بعد</p></div></div>';
+function render(){
+  if(!document.getElementById('tbody'))return;
+  var q=(document.getElementById('search').value||'').toLowerCase();
+  var fs=document.getElementById('fStatus').value;
+  var fl=document.getElementById('fLevel').value;
+  var d=data.filter(function(p){
+    var ms=!q||p.name.toLowerCase().includes(q)||(p.phone||'').includes(q);
+    var mst=!fs||(p.status||'pending')===fs;
+    var ml=!fl||p.level===fl;
+    return ms&&mst&&ml;
+  });
+  document.getElementById('count').textContent=d.length+' مشارك';
+  var tb=document.getElementById('tbody');
+  if(!d.length){
+    tb.innerHTML='<tr><td colspan="9" style="text-align:center;padding:3rem;color:#777">لا يوجد نتائج</td></tr>';
     return;
   }
-  feed.innerHTML = allActivities.map(a=>`
-    <div class="feed-item">
-      <div class="feed-dot" style="background:${a.color}"></div>
-      <div class="feed-content">
-        <p>${a.text}</p>
-        <span>${fmtDate(a.time)}</span>
-      </div>
-    </div>`).join('');
+  d.sort(function(a,b){return new Date(b.date)-new Date(a.date)});
+  tb.innerHTML=d.map(function(p,i){
+    var s=statusMap[p.status||'pending'];
+    return '<tr>'+
+      '<td style="color:#777;font-size:0.78rem">'+(i+1)+'</td>'+
+      '<td><div style="font-weight:700">'+p.name+'</div><div style="font-size:0.75rem;color:#777">'+(p.email||'')+'</div></td>'+
+      '<td dir="ltr" style="color:#777;font-size:0.82rem">'+(p.phone||'')+'</td>'+
+      '<td>'+(p.wilaya||'—')+'</td>'+
+      '<td><span class="pill '+s.cls+'" style="cursor:pointer" onclick="cycleStatus('+JSON.stringify(p.id)+')">'+s.lbl+'</span></td>'+
+      '<td>'+(levelMap[p.level]||'—')+'</td>'+
+      '<td>'+(p.size?'<span class="pill pill-gray">'+p.size+'</span>':'—')+'</td>'+
+      '<td style="font-size:0.75rem;color:#777">'+fmtDate(p.date)+'</td>'+
+      '<td><button class="btn-sec" onclick="del('+JSON.stringify(p.id)+')" style="padding:4px 10px;color:#ef4444;border-color:rgba(239,68,68,0.3)">🗑</button></td>'+
+    '</tr>';
+  }).join('');
 }
 
-function startCountdown(){
-  const target = new Date(); target.setDate(target.getDate()+45); target.setHours(9,0,0,0);
-  function tick(){
-    const diff=target-new Date(); if(diff<0) return;
-    const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
-    document.getElementById('eventCountdown').innerHTML=[['يوم',d],['ساعة',h],['دقيقة',m],['ثانية',s]].map(([l,v])=>`
-      <div class="ec-box"><div class="ec-num">${String(v).padStart(2,'0')}</div><div class="ec-lbl">${l}</div></div>`).join('');
-  }
-  tick(); setInterval(tick,1000);
-}
-
-// ══════════════════════════════════════════════════
-//  PARTICIPANTS
-// ══════════════════════════════════════════════════
-const levelMap={beginner:'مبتدئ',intermediate:'متوسط',advanced:'محترف'};
-const levelPill={beginner:'pill-blue',intermediate:'pill-orange',advanced:'pill-green'};
-
-function renderParticipantsKPIs(){
-  const total = state.participants.length;
-  const confirmed = state.participants.filter(p=>(p.status||'pending')==='confirmed').length;
-  const cancelled = state.participants.filter(p=>(p.status||'pending')==='cancelled').length;
-  const pending = state.participants.filter(p=>(p.status||'pending')==='pending').length;
-  const el = (id,v) => { const e=document.getElementById(id); if(e) e.textContent=v; };
-  el('kpi-p-total', total);
-  el('kpi-p-confirmed', confirmed);
-  el('kpi-p-cancelled', cancelled);
-  el('kpi-p-pending', pending);
-}
-
-function cycleParticipantStatus(id){
-  const p=state.participants.find(x=>x.id===id); if(!p) return;
-  const order=['pending','confirmed','cancelled'];
-  const idx=order.indexOf(p.status||'pending');
+function cycleStatus(id){
+  var p=data.find(function(x){return x.id===id});
+  if(!p)return;
+  var order=['pending','confirmed','cancelled'];
+  var idx=order.indexOf(p.status||'pending');
   p.status=order[(idx+1)%order.length];
-  saveAll(); renderParticipants();
-  const labels={confirmed:'✅ تم التأكيد',cancelled:'❌ تم الإلغاء',pending:'⏳ قيد الانتظار'};
-  toast(labels[p.status]||'','info');
+  localStorage.setItem('camp_registrations',JSON.stringify(data));
+  renderKPIs();render();
+  toast('تم التحديث','success');
 }
 
-function deleteParticipant(id){
-  if(!confirm('تأكيد حذف هذا المشارك؟')) return;
-  state.participants=state.participants.filter(p=>p.id!==id);
-  // Remove from teams
-  state.teams.forEach(t=>{ if(t.members) t.members=t.members.filter(m=>m!==id); });
-  saveAll(); renderParticipants(); renderTeams(); renderOverview();
-  toast('تم الحذف','info');
+function del(id){
+  if(!confirm('حذف هذا المشارك؟'))return;
+  data=data.filter(function(p){return p.id!==id});
+  localStorage.setItem('camp_registrations',JSON.stringify(data));
+  renderKPIs();render();
+  toast('تم الحذف','success');
 }
 
-function exportParticipantsCSV(){
-  const headers=['الاسم','الهاتف','الإيميل','الولاية','المستوى','التريكو','الحالة','الفريق','تاريخ التسجيل'];
-  const rows=state.participants.map(p=>{
-    const team=getTeamOfParticipant(p.id);
-    return [p.name,p.phone||'',p.email||'',p.wilaya||'',levelMap[p.level]||p.level||'',p.size||'',p.status||'pending',team?.name||'',fmtDate(p.date)];
+function exportCSV(){
+  var headers=['الاسم','الهاتف','الإيميل','الولاية','المستوى','التريكو','الحالة','التاريخ'];
+  var rows=data.map(function(p){
+    return [p.name,p.phone||'',p.email||'',p.wilaya||'',levelMap[p.level]||'',p.size||'',p.status||'pending',fmtDate(p.date)];
   });
-  const csv='\uFEFF'+[headers,...rows].map(r=>r.join(',')).join('\n');
-  const a=document.createElement('a');
+  var csv='\uFEFF'+[headers].concat(rows).map(function(r){return r.join(',')}).join('\n');
+  var a=document.createElement('a');
   a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
   a.download='campecom-participants.csv';
   a.click();
-  toast('تم تصدير القائمة ✓','success');
+  toast('تم التصدير ✓','success');
 }
 
-function renderParticipants(){
-  if(!document.getElementById('p-search')) return;
-  renderParticipantsKPIs();
-  const q=document.getElementById('p-search').value.toLowerCase();
-  const lv=document.getElementById('p-level').value;
-  const tf=document.getElementById('p-team-filter').value;
-  const sf=document.getElementById('p-status-filter')?.value||'';
-  let data=state.participants.filter(p=>{
-    const ms=!q||p.name.includes(q)||(p.phone||'').includes(q)||(p.email||'').toLowerCase().includes(q);
-    const ml=!lv||p.level===lv;
-    const mt=!tf||(tf==='assigned'?getTeamOfParticipant(p.id):!getTeamOfParticipant(p.id));
-    const mst=!sf||(p.status||'pending')===sf;
-    return ms&&ml&&mt&&mst;
-  });
-  document.getElementById('p-count').textContent=`${data.length} مشارك`;
-  const tbody=document.getElementById('p-tbody');
-  if(!data.length){tbody.innerHTML=`<tr><td colspan="10" style="text-align:center;padding:3rem;color:var(--muted)">لا يوجد نتائج</td></tr>`;return;}
-
-  const statusMap={
-    confirmed:{label:'مؤكد ✅', row:'background:rgba(34,197,94,0.04);border-right:3px solid var(--success)'},
-    cancelled:{label:'ملغي ❌',  row:'background:rgba(239,68,68,0.06);border-right:3px solid var(--danger)'},
-    pending:  {label:'انتظار ⏳',row:''},
-  };
-
-  tbody.innerHTML=data.sort((a,b)=>new Date(b.date)-new Date(a.date)).map((p,i)=>{
-    const team=getTeamOfParticipant(p.id);
-    const st=statusMap[p.status||'pending']||statusMap.pending;
-    return`<tr style="${st.row}">
-      <td style="color:var(--muted);font-size:0.78rem">${i+1}</td>
-      <td><div style="font-weight:700">${p.name}</div><div style="font-size:0.75rem;color:var(--muted)">${p.email||'—'}</div></td>
-      <td dir="ltr" style="color:var(--muted);font-size:0.82rem">${p.phone||'—'}</td>
-      <td>${p.wilaya||'—'}</td>
-      <td><span class="pill pill-gray" style="cursor:pointer" onclick="cycleParticipantStatus(${JSON.stringify(p.id)})" title="اضغط لتغيير الحالة">${st.label}</span></td>
-      <td><span class="pill ${levelPill[p.level]||'pill-gray'}">${levelMap[p.level]||p.level||'—'}</span></td>
-      <td>${p.size?`<span class="pill pill-gray" style="font-size:0.7rem">${p.size}</span>`:'—'}</td>
-      <td>${team?`<span class="pill pill-green">${team.name}</span>`:'<span class="pill pill-gray">غير مُسنَد</span>'}</td>
-      <td style="font-size:0.75rem;color:var(--muted)">${fmtDate(p.date)}</td>
-      <td style="display:flex;gap:4px;align-items:center">
-        <button class="btn-sm" onclick="quickAssign(${JSON.stringify(p.id)})">إسناد ←</button>
-        <button class="btn-sm danger" onclick="deleteParticipant(${JSON.stringify(p.id)})" title="حذف" style="color:var(--danger);border-color:rgba(239,68,68,0.3)">🗑</button>
-      </td>
-    </tr>`;}).join('');
+function fmtDate(iso){
+  if(!iso)return'—';
+  var d=new Date(iso);
+  return d.toLocaleDateString('ar-DZ',{day:'numeric',month:'short'});
 }
 
-
-function getTeamOfParticipant(id){
-  return state.teams.find(t=>t.members&&t.members.includes(id));
-}
-
-function quickAssign(participantId){
-  // Find unassigned, add to first team with space or prompt
-  const teams=state.teams.filter(t=>!t.members||t.members.length<(t.max||6));
-  if(!teams.length){toast('لا يوجد فرق متاحة — أنشئ فريقاً أولاً','error');return;}
-  if(teams.length===1){assignMember(participantId,teams[0].id);return;}
-  // Show pick
-  state.assigningTeamId=null;
-  openAssignModal(participantId);
-}
-
-function openAssignModal(participantId){
-  state.assigningParticipantId=participantId;
-  const p=state.participants.find(x=>x.id===participantId);
-  document.getElementById('assign-team-name').textContent=`إسناد "${p?.name||''}" لفريق:`;
-  document.getElementById('assign-search').value='';
-  renderAssignList();
-  openModal('modal-assign');
-}
-
-function renderAssignList(){
-  const q=document.getElementById('assign-search').value.toLowerCase();
-  const list=document.getElementById('assign-list');
-  const teams=state.teams.filter(t=>!q||t.name.toLowerCase().includes(q));
-  if(!teams.length){list.innerHTML='<div style="color:var(--muted);font-size:0.85rem;text-align:center;padding:1rem">لا يوجد فرق</div>';return;}
-  list.innerHTML=teams.map(t=>{
-    const count=(t.members||[]).length; const max=t.max||6; const full=count>=max;
-    return`<div style="display:flex;align-items:center;justify-content:space-between;padding:0.8rem;background:var(--bg3);border:1px solid var(--border);border-radius:9px">
-      <div style="display:flex;align-items:center;gap:8px">
-        <div style="width:10px;height:10px;border-radius:50%;background:${t.color};flex-shrink:0"></div>
-        <div>
-          <div style="font-size:0.88rem;font-weight:700">${t.name}</div>
-          <div style="font-size:0.72rem;color:var(--muted)">${count}/${max} أعضاء</div>
-        </div>
-      </div>
-      <button class="btn-sm" ${full?'disabled style="opacity:0.4;cursor:not-allowed"':''} onclick="assignMember(${JSON.stringify(state.assigningParticipantId)},${JSON.stringify(t.id)})">${full?'ممتلئ':'إضافة ←'}</button>
-    </div>`;}).join('');
-}
-
-function assignMember(participantId, teamId){
-  // Remove from any existing team first
-  state.teams.forEach(t=>{if(t.members)t.members=t.members.filter(m=>m!==participantId)});
-  const team=state.teams.find(t=>t.id===teamId);
-  if(!team)return;
-  if(!team.members)team.members=[];
-  if(team.members.includes(participantId)){toast('المشارك موجود في هذا الفريق بالفعل','error');return;}
-  team.members.push(participantId);
-  saveAll(); renderTeams(); renderParticipants(); renderOverview();
-  closeModal('modal-assign');
-  toast(`تم إضافة المشارك لـ "${team.name}"  ✓`,'success');
-}
-
-// ══════════════════════════════════════════════════
-//  TEAMS
-// ══════════════════════════════════════════════════
-function openCreateTeam(){nav('teams');openModal('modal-team')}
-function createTeam(){
-  const name=document.getElementById('t-name').value.trim();
-  if(!name){toast('أدخل اسم الفريق','error');return;}
-  const team={id:Date.now(),name,color:document.getElementById('t-color').value,max:parseInt(document.getElementById('t-max').value)||6,members:[],created:new Date().toISOString()};
-  state.teams.push(team); saveAll(); renderTeams(); renderOverview();
-  closeModal('modal-team'); document.getElementById('t-name').value='';
-  toast(`تم إنشاء فريق "${name}"  ✓`,'success');
-  addActivity(`فريق جديد: ${name}`,'team');
-}
-
-function renderTeams(){
-  const unassigned=state.participants.filter(p=>!getTeamOfParticipant(p.id)).length;
-  document.getElementById('unassigned-count').textContent=unassigned;
-  document.getElementById('unassigned-bar').style.display=unassigned?'flex':'none';
-  const grid=document.getElementById('teams-grid');
-  if(!state.teams.length){
-    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);font-size:0.9rem">لا يوجد فرق بعد — اضغط "+ إنشاء فريق" للبدء</div>';
-    return;
-  }
-  grid.innerHTML=state.teams.map(t=>{
-    const members=(t.members||[]).map(id=>state.participants.find(p=>p.id===id)).filter(Boolean);
-    return`<div class="team-card">
-      <div class="team-header">
-        <div class="team-color" style="background:${t.color}"></div>
-        <div class="team-name">${t.name}</div>
-        <span class="pill pill-gray">${members.length}/${t.max||6}</span>
-      </div>
-      <div class="team-body">
-        ${members.length?members.map(m=>`
-          <div class="member-item">
-            <div class="avatar">${m.name[0]}</div>
-            <div>
-              <div class="member-name">${m.name}</div>
-              <div class="member-role">${levelMap[m.level]||'—'} · ${m.wilaya||'—'}</div>
-            </div>
-          </div>`).join(''):'<div style="color:var(--muted);font-size:0.82rem;padding:0.5rem 0">لا يوجد أعضاء بعد</div>'}
-      </div>
-      <div class="team-footer">
-        <button class="btn-sm" onclick="openAssignByTeam(${JSON.stringify(t.id)})">+ عضو</button>
-        <button class="btn-sm danger" onclick="deleteTeam(${JSON.stringify(t.id)})">حذف</button>
-      </div>
-    </div>`;}).join('');
-}
-
-function openAssignByTeam(teamId){
-  state.assigningTeamId=teamId;
-  const team=state.teams.find(t=>t.id===teamId);
-  document.getElementById('assign-team-name').textContent=`إضافة عضو لـ "${team?.name}"`;
-  document.getElementById('assign-search').value='';
-  // Override: show participants not in this team
-  const list=document.getElementById('assign-list');
-  const avail=state.participants.filter(p=>!(team?.members||[]).includes(p.id));
-  if(!avail.length){list.innerHTML='<div style="color:var(--muted);font-size:0.85rem;text-align:center;padding:1rem">كل المشاركين مُسنَدون</div>'}
-  else{
-    list.innerHTML=avail.map(p=>`
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:0.8rem;background:var(--bg3);border:1px solid var(--border);border-radius:9px">
-        <div>
-          <div style="font-size:0.88rem;font-weight:700">${p.name}</div>
-          <div style="font-size:0.72rem;color:var(--muted)">${levelMap[p.level]||'—'} · ${p.wilaya||'—'}</div>
-        </div>
-        <button class="btn-sm" onclick="assignMember(${JSON.stringify(p.id)},${JSON.stringify(teamId)})">إضافة ←</button>
-      </div>`).join('');
-  }
-  openModal('modal-assign');
-}
-
-function deleteTeam(id){
-  if(!confirm('تأكيد حذف هذا الفريق؟ سيتم إلغاء إسناد الأعضاء.')) return;
-  state.teams=state.teams.filter(t=>t.id!==id);
-  saveAll(); renderTeams(); renderOverview();
-  toast('تم حذف الفريق','info');
-}
-
-function autoAssign(){
-  const unassigned=state.participants.filter(p=>!getTeamOfParticipant(p.id));
-  if(!unassigned.length){toast('كل المشاركين مُسنَدون بالفعل','info');return;}
-  if(!state.teams.length){toast('أنشئ فريقاً أولاً','error');return;}
-  // Round-robin assignment
-  unassigned.forEach((p,i)=>{
-    const team=state.teams[i%state.teams.length];
-    if((team.members||[]).length<(team.max||6)){
-      if(!team.members)team.members=[];
-      if(!team.members.includes(p.id)) team.members.push(p.id);
-    }
-  });
-  saveAll(); renderTeams(); renderParticipants(); renderOverview();
-  toast(`تم توزيع ${unassigned.length} مشارك تلقائياً ✓`,'success');
-}
-
-// ══════════════════════════════════════════════════
-//  SCHEDULE
-// ══════════════════════════════════════════════════
-const sessionTypeLabel={opening:'افتتاح',competition:'منافسة',workshop:'ورشة',judging:'تقييم',break:'استراحة',closing:'ختام'};
-const sessionTypePill={opening:'pill-orange',competition:'pill-red',workshop:'pill-blue',judging:'pill-purple',break:'pill-gray',closing:'pill-green'};
-
-function openAddSession(){openModal('modal-session')}
-function addSession(){
-  const title=document.getElementById('s-title').value.trim();
-  if(!title){toast('أدخل عنوان الجلسة','error');return;}
-  const session={id:Date.now(),day:parseInt(document.getElementById('s-day').value),time:document.getElementById('s-time').value,title,desc:document.getElementById('s-desc').value.trim(),type:document.getElementById('s-type').value};
-  state.schedule.push(session); saveAll(); renderSchedule();
-  closeModal('modal-session');
-  document.getElementById('s-title').value=''; document.getElementById('s-desc').value='';
-  toast(`تمت إضافة "${title}"  ✓`,'success');
-}
-
-function renderSchedule(){
-  // Day tabs
-  const tabs=document.getElementById('day-tabs');
-  tabs.innerHTML=[1,2,3,4].map(d=>`<button class="day-tab ${state.currentDay===d?'active':''}" onclick="setDay(${d})">اليوم ${d}</button>`).join('');
-  // Timeline
-  const tl=document.getElementById('schedule-timeline');
-  const sessions=state.schedule.filter(s=>s.day===state.currentDay).sort((a,b)=>a.time.localeCompare(b.time));
-  if(!sessions.length){tl.innerHTML='<div style="color:var(--muted);font-size:0.88rem;padding:2rem 0">لا يوجد جلسات لهذا اليوم بعد — أضف جلسة من الأعلى</div>';return;}
-  tl.innerHTML=sessions.map(s=>`
-    <div class="tl-item">
-      <div class="tl-dot"></div>
-      <div class="tl-time">${s.time}</div>
-      <div class="tl-card">
-        <h4>${s.title}</h4>
-        ${s.desc?`<p>${s.desc}</p>`:''}
-        <div class="tl-tags">
-          <span class="pill ${sessionTypePill[s.type]||'pill-gray'}">${sessionTypeLabel[s.type]||s.type}</span>
-        </div>
-      </div>
-    </div>`).join('');
-}
-
-function setDay(d){state.currentDay=d;renderSchedule()}
-
-// ══════════════════════════════════════════════════
-//  NOTIFICATIONS
-// ══════════════════════════════════════════════════
-let notifTarget='all';
-function toggleTarget(btn,val){
-  document.querySelectorAll('.ch-opt').forEach(b=>b.classList.remove('sel'));
-  btn.classList.add('sel'); notifTarget=val;
-}
-function sendNotif(){
-  const title=document.getElementById('n-title').value.trim();
-  const body=document.getElementById('n-body').value.trim();
-  if(!title||!body){toast('عنوان ونص الإشعار مطلوبان','error');return;}
-  const n={id:Date.now(),title,body,priority:document.getElementById('n-priority').value,target:notifTarget,date:new Date().toISOString()};
-  state.notifications.unshift(n); saveAll(); renderNotifications(); renderOverview();
-  document.getElementById('n-title').value=''; document.getElementById('n-body').value='';
-  toast(`تم إرسال الإشعار ✓`,'success');
-  // Update badge
-  document.getElementById('notif-badge').textContent=state.notifications.length;
-  document.getElementById('ov-notifs').textContent=state.notifications.length;
-}
-
-function renderNotifications(){
-  const list=document.getElementById('notif-list');
-  document.getElementById('notif-count-lbl').textContent=`${state.notifications.length} إشعار`;
-  document.getElementById('notif-badge').textContent=state.notifications.length;
-  if(!state.notifications.length){
-    list.innerHTML='<div style="text-align:center;padding:3rem;color:var(--muted);font-size:0.88rem">لا يوجد إشعارات بعد — أرسل أول إشعار من الأعلى</div>';
-    return;
-  }
-  const targetLabel={all:'الكل',beginner:'المبتدئون',intermediate:'المتوسطون',advanced:'المحترفون'};
-  const priorityPill={normal:'pill-gray',important:'pill-orange',urgent:'pill-red'};
-  const priorityLabel={normal:'عادي',important:'مهم',urgent:'عاجل 🔴'};
-  list.innerHTML=state.notifications.map(n=>`
-    <div class="notif-item">
-      <div class="notif-top">
-        <div class="notif-title">${n.title}</div>
-        <div class="notif-meta">
-          <span class="pill ${priorityPill[n.priority]||'pill-gray'}">${priorityLabel[n.priority]||n.priority}</span>
-          <span class="pill pill-blue">${targetLabel[n.target]||n.target}</span>
-        </div>
-      </div>
-      <div class="notif-text">${n.body}</div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.6rem">
-        <span style="font-size:0.72rem;color:var(--muted)">⏱ ${fmtDate(n.date)}</span>
-        <button class="btn-sm danger" onclick="deleteNotif(${JSON.stringify(n.id)})">حذف</button>
-      </div>
-    </div>`).join('');
-}
-
-function deleteNotif(id){
-  state.notifications=state.notifications.filter(n=>n.id!==id);
-  saveAll(); renderNotifications(); renderOverview();
-  toast('تم حذف الإشعار','info');
-}
-
-// ══════════════════════════════════════════════════
-//  MODALS
-// ══════════════════════════════════════════════════
-function openModal(id){document.getElementById(id).classList.add('open')}
-function closeModal(id){document.getElementById(id).classList.remove('open')}
-document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open')}));
-
-// ══════════════════════════════════════════════════
-//  TOAST
-// ══════════════════════════════════════════════════
-function toast(msg,type='info'){
-  const t=document.getElementById('toast');
-  const el=document.createElement('div');
-  el.className=`toast-item ${type}`;
-  el.textContent=msg;
-  t.appendChild(el);
-  setTimeout(()=>{el.style.opacity='0';el.style.transform='translateX(20px)';el.style.transition='all 0.3s';setTimeout(()=>el.remove(),300)},3000);
-}
-
-// ══════════════════════════════════════════════════
-//  HELPERS
-// ══════════════════════════════════════════════════
-function fmtDate(iso){if(!iso)return'—';const d=new Date(iso);return d.toLocaleDateString('ar-DZ',{day:'numeric',month:'short'})+' '+d.toLocaleTimeString('ar-DZ',{hour:'2-digit',minute:'2-digit'})}
-
-function getDefaultSchedule(){
-  return[
-    {id:1,day:1,time:'09:00',title:'استقبال المشاركين وتسجيل الحضور',desc:'',type:'opening'},
-    {id:2,day:1,time:'10:00',title:'افتتاح الحدث وكلمة اللجنة',desc:'تقديم فكرة الحدث والقواعد',type:'opening'},
-    {id:3,day:1,time:'11:00',title:'تشكيل الفرق والتعارف',desc:'',type:'workshop'},
-    {id:4,day:1,time:'14:00',title:'تسليم المنتجات وبدء العمل',desc:'كل فريق يحصل على منتجه وميزانيته',type:'competition'},
-    {id:5,day:2,time:'09:00',title:'مراجعة صباحية مع الفرق',desc:'',type:'judging'},
-    {id:6,day:2,time:'11:00',title:'ورشة: Facebook Ads المتقدم',desc:'',type:'workshop'},
-    {id:7,day:2,time:'14:00',title:'Content War — صناعة Reels',desc:'كل فريق ينتج محتوى لمنتجه',type:'competition'},
-    {id:8,day:3,time:'09:00',title:'تحليل النتائج والتعديلات',desc:'',type:'judging'},
-    {id:9,day:3,time:'14:00',title:'إطلاق الحملات الإعلانية',desc:'',type:'competition'},
-    {id:10,day:4,time:'09:00',title:'اليوم الحاسم — مبيعات نهائية',desc:'',type:'competition'},
-    {id:11,day:4,time:'16:00',title:'إغلاق الحملات وحساب النتائج',desc:'',type:'judging'},
-    {id:12,day:4,time:'18:00',title:'حفل الختام والجوائز',desc:'إعلان الفريق الفائز',type:'closing'},
-  ];
-}
-
-function generateDemoParticipants(){
-  const names=['أيمن بوزيان','سارة مقران','يونس بلقايد','ليلى حمداني','إسلام درار','نور الدين عمار','مريم تومي','ياسين كرار','فاطمة بوعلام','رامي زروق','هدى بن عمر','عبد الرحمن قاسم','خالد بلعيد','منى سعدي'];
-  const wilayas=['الجزائر العاصمة','وهران','قسنطينة','عنابة','سطيف','بجاية'];
-  const levels=['beginner','intermediate','advanced'];
-  const sources=['Instagram','TikTok','Facebook','من صديق'];
-  return names.map((name,i)=>{
-    const d=new Date(); d.setDate(d.getDate()-Math.floor(Math.random()*10));
-    return{id:Date.now()-i*10000,date:d.toISOString(),name,phone:`07${String(Math.floor(Math.random()*90000000+10000000))}`,email:`${name.split(' ')[0].toLowerCase()}@email.com`,wilaya:wilayas[i%wilayas.length],level:levels[i%levels.length],source:sources[i%sources.length]};
-  });
-}
-
-// ══ PUBLIC PROGRAMME VIEW ══
-function showPublic(){
-  document.getElementById('loginScreen').style.display='none';
-  document.getElementById('publicScreen').style.display='block';
-  renderPublicSchedule(1);
-}
-function hidePublic(){
-  document.getElementById('publicScreen').style.display='none';
-  document.getElementById('loginScreen').style.display='flex';
-}
-// ══ JUDGING SYSTEM ══
-
-function getDefaultCriteria(){
-  return[
-    {id:1001,name:'الاستراتيجية التسويقية',max:25,desc:'جودة الاستهداف والخطة'},
-    {id:1002,name:'التنفيذ والإعلانات',max:25,desc:'جودة الإعلانات والمحتوى'},
-    {id:1003,name:'النتائج والمبيعات',max:30,desc:'المبيعات والـ ROAS الفعلي'},
-    {id:1004,name:'الإبداع والمحتوى',max:20,desc:'جودة الريلز والتصاميم'},
-  ];
-}
-
-function switchJTab(tab){
-  ['criteria','work','score','board'].forEach(t=>{
-    document.getElementById('jtab-'+t+'-content').style.display = t===tab?'block':'none';
-    document.getElementById('jtab-'+t).classList.toggle('active', t===tab);
-  });
-  if(tab==='work') renderTeamWork();
-  if(tab==='score') populateScoreSelects();
-  if(tab==='board') renderLeaderboard();
-}
-
-function renderJudging(){
-  renderCriteria();
-  populateScoreSelects();
-}
-
-// ── CRITERIA ──
-function openAddCriteria(){ document.getElementById('c-name').value=''; document.getElementById('c-max').value=20; document.getElementById('c-desc').value=''; openModal('modal-criteria'); }
-
-function saveCriteria(){
-  const name=document.getElementById('c-name').value.trim();
-  if(!name){toast('أدخل اسم المعيار','error');return;}
-  const c={id:Date.now(),name,max:parseInt(document.getElementById('c-max').value)||20,desc:document.getElementById('c-desc').value.trim()};
-  if(!state.criteria)state.criteria=[];
-  state.criteria.push(c); saveAll(); renderCriteria(); closeModal('modal-criteria');
-  toast(`تم إضافة معيار "${name}" ✓`,'success');
-}
-
-function deleteCriteria(id){
-  if(!confirm('حذف هذا المعيار؟'))return;
-  state.criteria=state.criteria.filter(c=>c.id!==id);
-  saveAll(); renderCriteria(); toast('تم الحذف','info');
-}
-
-function renderCriteria(){
-  if(!state.criteria)state.criteria=getDefaultCriteria();
-  const list=document.getElementById('criteria-list');
-  const total=document.getElementById('criteria-total');
-  if(!list)return;
-  const sum=state.criteria.reduce((a,c)=>a+c.max,0);
-  list.innerHTML=state.criteria.map(c=>`
-    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.2rem;display:flex;align-items:center;gap:1rem">
-      <div style="flex:1">
-        <div style="font-size:0.92rem;font-weight:800;margin-bottom:3px">${c.name}</div>
-        ${c.desc?`<div style="font-size:0.78rem;color:var(--muted)">${c.desc}</div>`:''}
-      </div>
-      <div style="background:rgba(75,142,245,0.1);border:1px solid rgba(75,142,245,0.2);color:var(--accent);font-size:0.85rem;font-weight:800;padding:6px 14px;border-radius:8px;flex-shrink:0">
-        ${c.max} نقطة
-      </div>
-      <button class="btn-sm danger" onclick="deleteCriteria(${c.id})">🗑</button>
-    </div>`).join('');
-  total.innerHTML=`<strong style="color:var(--accent)">${sum}</strong> نقطة إجمالية`;
-}
-
-// ── SCORE ENTRY ──
-function populateScoreSelects(){
-  const judgeSelect=document.getElementById('score-judge');
-  const teamSelect=document.getElementById('score-team');
-  if(!judgeSelect||!teamSelect)return;
-  judgeSelect.innerHTML='<option value="">اختر الحكم</option>'+(state.judges||[]).map(j=>`<option value="${j.id}">${j.name}</option>`).join('');
-  teamSelect.innerHTML='<option value="">اختر الفريق</option>'+(state.teams||[]).map(t=>`<option value="${t.id}">${t.name}</option>`).join('');
-  renderScoreForm();
-}
-
-function renderScoreForm(){
-  const judgeId=document.getElementById('score-judge')?.value;
-  const teamId=document.getElementById('score-team')?.value;
-  const form=document.getElementById('score-form');
-  if(!form)return;
-  if(!judgeId||!teamId){
-    form.innerHTML='<div style="color:var(--muted);font-size:0.88rem;padding:1rem 0">اختر الحكم والفريق لبدء التقييم</div>';
-    return;
-  }
-  if(!state.scores[judgeId])state.scores[judgeId]={};
-  if(!state.scores[judgeId][teamId])state.scores[judgeId][teamId]={};
-  const saved=state.scores[judgeId][teamId];
-  const criteria=state.criteria||getDefaultCriteria();
-  form.innerHTML=`
-    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:1.5rem">
-      <div style="font-size:0.85rem;font-weight:800;margin-bottom:1.2rem;color:var(--muted)">أدخل نقاط كل معيار</div>
-      ${criteria.map(c=>{
-        const val=saved[c.id]||0;
-        return`<div style="margin-bottom:1.2rem">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-            <div>
-              <div style="font-size:0.88rem;font-weight:700">${c.name}</div>
-              ${c.desc?`<div style="font-size:0.72rem;color:var(--muted)">${c.desc}</div>`:''}
-            </div>
-            <div style="display:flex;align-items:center;gap:8px">
-              <input type="number" id="sc-${c.id}" value="${val}" min="0" max="${c.max}"
-                style="width:70px;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:6px 10px;color:var(--text);font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:700;outline:none;text-align:center"
-                oninput="updateScoreBar(${c.id},${c.max})">
-              <span style="font-size:0.78rem;color:var(--muted)">/ ${c.max}</span>
-            </div>
-          </div>
-          <div style="height:5px;background:var(--border2);border-radius:3px;overflow:hidden">
-            <div id="bar-${c.id}" style="height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width 0.3s;width:${Math.round(val/c.max*100)}%"></div>
-          </div>
-        </div>`;
-      }).join('')}
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border)">
-        <div style="font-size:0.85rem;color:var(--muted)">المجموع: <strong id="score-total" style="color:var(--accent)">${Object.values(saved).reduce((a,b)=>a+b,0)}</strong> / ${criteria.reduce((a,c)=>a+c.max,0)}</div>
-        <button class="btn-send" onclick="submitScores()">حفظ التقييم ←</button>
-      </div>
-    </div>`;
-}
-
-function updateScoreBar(cId,max){
-  const val=Math.min(max,Math.max(0,parseInt(document.getElementById('sc-'+cId)?.value)||0));
-  const bar=document.getElementById('bar-'+cId);
-  if(bar) bar.style.width=Math.round(val/max*100)+'%';
-  // Update total
-  const criteria=state.criteria||getDefaultCriteria();
-  const total=criteria.reduce((sum,c)=>{
-    const v=Math.min(c.max,Math.max(0,parseInt(document.getElementById('sc-'+c.id)?.value)||0));
-    return sum+v;
-  },0);
-  const el=document.getElementById('score-total');
-  if(el) el.textContent=total;
-}
-
-function submitScores(){
-  const judgeId=document.getElementById('score-judge')?.value;
-  const teamId=document.getElementById('score-team')?.value;
-  if(!judgeId||!teamId){toast('اختر الحكم والفريق','error');return;}
-  const criteria=state.criteria||getDefaultCriteria();
-  if(!state.scores[judgeId])state.scores[judgeId]={};
-  if(!state.scores[judgeId][teamId])state.scores[judgeId][teamId]={};
-  criteria.forEach(c=>{
-    const val=Math.min(c.max,Math.max(0,parseInt(document.getElementById('sc-'+c.id)?.value)||0));
-    state.scores[judgeId][teamId][c.id]=val;
-  });
-  saveAll();
-  const judge=state.judges.find(j=>String(j.id)===String(judgeId));
-  const team=state.teams.find(t=>String(t.id)===String(teamId));
-  toast(`تم حفظ تقييم "${judge?.name}" لـ "${team?.name}" ✓`,'success');
-}
-
-// ── LEADERBOARD ──
-function renderLeaderboard(){
-  const el=document.getElementById('leaderboard-content');
-  if(!el)return;
-  if(!state.teams.length){el.innerHTML='<div style="color:var(--muted);padding:2rem;text-align:center">لا يوجد فرق بعد</div>';return;}
-  const criteria=state.criteria||getDefaultCriteria();
-  const maxTotal=criteria.reduce((a,c)=>a+c.max,0);
-  // Calculate avg score per team across all judges
-  const teamScores=state.teams.map(team=>{
-    const judgeScores=Object.entries(state.scores).map(([jId,teams])=>{
-      const ts=teams[team.id]||{};
-      return criteria.reduce((sum,c)=>sum+(ts[c.id]||0),0);
-    }).filter((_,i)=>Object.values(state.scores)[i]?.[team.id]);
-    const avg=judgeScores.length?Math.round(judgeScores.reduce((a,b)=>a+b,0)/judgeScores.length):0;
-    const judgeCount=judgeScores.length;
-    // Per criteria avg
-    const criteriaAvg=criteria.map(c=>{
-      const vals=Object.values(state.scores).map(ts=>(ts[team.id]||{})[c.id]||0).filter(v=>v>0);
-      return{...c,avg:vals.length?Math.round(vals.reduce((a,b)=>a+b,0)/vals.length):0};
-    });
-    return{team,avg,judgeCount,criteriaAvg};
-  }).sort((a,b)=>b.avg-a.avg);
-
-  el.innerHTML=`
-    <div style="display:flex;flex-direction:column;gap:0.8rem;margin-bottom:2rem">
-      ${teamScores.map((ts,i)=>{
-        const pct=maxTotal?Math.round(ts.avg/maxTotal*100):0;
-        const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
-        return`<div style="background:var(--bg2);border:1px solid ${i===0?'rgba(75,142,245,0.4)':'var(--border)'};border-radius:14px;padding:1.4rem;${i===0?'background:rgba(75,142,245,0.05)':''}">
-          <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem">
-            <div style="font-size:1.8rem;flex-shrink:0">${medal||`<span style="font-size:1rem;color:var(--muted);font-weight:700">#${i+1}</span>`}</div>
-            <div style="flex:1">
-              <div style="display:flex;align-items:center;gap:8px">
-                <div style="width:10px;height:10px;border-radius:50%;background:${ts.team.color};flex-shrink:0"></div>
-                <div style="font-size:1rem;font-weight:800">${ts.team.name}</div>
-              </div>
-              <div style="font-size:0.75rem;color:var(--muted);margin-top:2px">${ts.judgeCount} حكم قيّم · ${(ts.team.members||[]).length} أعضاء</div>
-            </div>
-            <div style="text-align:center">
-              <div style="font-size:1.6rem;font-weight:900;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">${ts.avg}</div>
-              <div style="font-size:0.7rem;color:var(--muted)">/ ${maxTotal}</div>
-            </div>
-          </div>
-          <div style="height:6px;background:var(--border2);border-radius:3px;overflow:hidden;margin-bottom:0.8rem">
-            <div style="height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));width:${pct}%;transition:width 0.5s"></div>
-          </div>
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
-            ${ts.criteriaAvg.map(c=>`
-              <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:4px 10px;font-size:0.72rem">
-                <span style="color:var(--muted)">${c.name}: </span>
-                <span style="color:var(--accent);font-weight:700">${c.avg}/${c.max}</span>
-              </div>`).join('')}
-          </div>
-        </div>`;
-      }).join('')}
-    </div>
-    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden">
-      <div style="padding:0.9rem 1.2rem;background:var(--bg3);border-bottom:1px solid var(--border);font-size:0.85rem;font-weight:800">تفاصيل تقييم كل حكم</div>
-      <div style="overflow-x:auto">
-        <table>
-          <thead><tr>
-            <th>الفريق</th>
-            ${(state.judges||[]).map(j=>`<th>${j.name}</th>`).join('')}
-            <th>المعدّل</th>
-          </tr></thead>
-          <tbody>
-            ${teamScores.map(ts=>`<tr>
-              <td><div style="display:flex;align-items:center;gap:6px"><div style="width:8px;height:8px;border-radius:50%;background:${ts.team.color}"></div><span style="font-weight:700">${ts.team.name}</span></div></td>
-              ${(state.judges||[]).map(j=>{
-                const jScore=Object.entries(state.scores[j.id]||{}).find(([tId])=>String(tId)===String(ts.team.id));
-                const val=jScore?criteria.reduce((sum,c)=>sum+((jScore[1]||{})[c.id]||0),0):null;
-                return`<td>${val!==null?`<span style="font-weight:700;color:var(--accent)">${val}</span>`:'<span style="color:var(--muted2)">—</span>'}</td>`;
-              }).join('')}
-              <td><strong style="color:var(--accent)">${ts.avg}</strong></td>
-            </tr>`).join('')}
-          </tbody>
-        </table>
-      </div>
-    </div>`;
-}
-
-// ══ JUDGE LOGIN ══
-function genCode(){
-  const chars='abcdefghjkmnpqrstuvwxyz23456789';
-  let code='';
-  for(let i=0;i<8;i++) code+=chars[Math.floor(Math.random()*chars.length)];
-  document.getElementById('j-code').value=code;
-}
-
-function judgeLogin(){
-  const code = document.getElementById('judge-code').value.trim();
-  const judge = (state.judges||[]).find(j=>j.code && j.code===code);
-  if(!judge){
-    const err=document.getElementById('judge-err');
-    err.style.display='block';
-    setTimeout(()=>err.style.display='none',2500);
-    return;
-  }
-  state.currentJudge = judge;
-  document.getElementById('loginScreen').style.display='none';
-  document.getElementById('judgePortal').style.display='block';
-  document.getElementById('judge-portal-name').textContent='🧑‍⚖️ '+judge.name;
-  applyJudgeLang();
-  renderJudgePortal();
-}
-function judgeLogout(){
-  state.currentJudge=null;
-  document.getElementById('judgePortal').style.display='none';
-  document.getElementById('loginScreen').style.display='flex';
-  document.getElementById('judge-code').value='';
-}
-
-// ══ JUDGE PORTAL LANGUAGE ══
-var JUDGE_LANG='ar';
-var JT={
-  ar:{badge:'لجنة التحكيم',title:'قيّم الفرق',desc:'شوف أعمال كل فريق ودخل نقاطك — تقييمك مستقل عن باقي الحكام',logout:'خروج',score_title:'✍️ تقييمك للفريق',save_btn:'حفظ التقييم ←',video_label:'🎬 الفيديو',video_btn:'▶ شوف الفيديو ←',metrics_label:'📊 مقاييس الحملة',no_video:'⚠️ ما زال ما رفعوش فيديو',no_metrics:'⚠️ ما زال ما أضافوش مقاييس',sales:'المبيعات',roas:'ROAS',reach:'Reach',clicks:'Clicks',dir:'rtl'},
-  fr:{badge:'Jury',title:'Évaluer les équipes',desc:"Consulte le travail de chaque équipe et entre tes notes — ton évaluation est indépendante",logout:'Déconnexion',score_title:'✍️ Ton évaluation',save_btn:'Enregistrer →',video_label:'🎬 Vidéo',video_btn:'▶ Voir la vidéo →',metrics_label:'📊 Métriques',no_video:'⚠️ Aucune vidéo uploadée',no_metrics:'⚠️ Aucune métrique ajoutée',sales:'Ventes',roas:'ROAS',reach:'Portée',clicks:'Clics',dir:'ltr'}
-};
-function toggleJudgeLang(){
-  JUDGE_LANG=JUDGE_LANG==='ar'?'fr':'ar';
-  applyJudgeLang();
-  if(judgeSelectedTeam) selectJudgeTeam(judgeSelectedTeam);
-}
-function applyJudgeLang(){
-  var t=JT[JUDGE_LANG];
-  var isAr=JUDGE_LANG==='ar';
-  var portal=document.getElementById('judgePortal');
-  if(portal) portal.dir=t.dir;
-  var lb=document.getElementById('judge-lang-btn'); if(lb) lb.textContent=isAr?'FR':'AR';
-  var badge=document.getElementById('judge-role-badge'); if(badge) badge.textContent=t.badge;
-  var ttl=document.getElementById('judge-title'); if(ttl) ttl.textContent=t.title;
-  var dsc=document.getElementById('judge-desc'); if(dsc) dsc.textContent=t.desc;
-  var lob=document.getElementById('judge-logout-btn'); if(lob) lob.textContent=t.logout;
-  var st=document.getElementById('judge-score-title'); if(st) st.textContent=t.score_title;
-  var sb=document.getElementById('judge-save-btn'); if(sb) sb.textContent=t.save_btn;
-}
-
-// ══ JUDGE PORTAL ══
-let judgeSelectedTeam = null;
-function renderJudgePortal(){
-  const tabs=document.getElementById('judge-team-tabs');
-  if(!state.teams.length){
-    tabs.innerHTML='<div style="color:var(--muted);font-size:0.88rem">لا يوجد فرق بعد</div>';
-    return;
-  }
-  tabs.innerHTML=state.teams.map(t=>`
-    <button onclick="selectJudgeTeam('${t.id}')"
-      id="jtteam-${t.id}"
-      style="display:flex;align-items:center;gap:7px;padding:8px 16px;border-radius:9px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-family:'Cairo',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;transition:all 0.2s">
-      <div style="width:8px;height:8px;border-radius:50%;background:${t.color}"></div>
-      ${t.name}
-    </button>`).join('');
-  if(state.teams.length) selectJudgeTeam(state.teams[0].id);
-}
-
-function selectJudgeTeam(teamId){
-  judgeSelectedTeam=teamId;
-  state.teams.forEach(t=>{
-    const btn=document.getElementById('jtteam-'+t.id);
-    if(btn){
-      const active=String(t.id)===String(teamId);
-      btn.style.background=active?'rgba(75,142,245,0.1)':'transparent';
-      btn.style.borderColor=active?'rgba(75,142,245,0.4)':'var(--border2)';
-      btn.style.color=active?'var(--accent)':'var(--muted)';
-    }
-  });
-  const team=state.teams.find(t=>String(t.id)===String(teamId));
-  const work=(state.teamWork||{})[teamId]||{};
-  const content=document.getElementById('judge-team-content');
-  content.innerHTML=`
-    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden">
-      <div style="height:3px;background:linear-gradient(90deg,${team?.color||'var(--accent)'},var(--accent2))"></div>
-      <div style="padding:1.5rem">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:1.2rem">
-          <div style="width:12px;height:12px;border-radius:50%;background:${team?.color||'var(--accent)'}"></div>
-          <div style="font-size:1rem;font-weight:800">${team?.name||'فريق'}</div>
-        </div>
-        ${work.video?`
-        <div style="margin-bottom:1.2rem">
-          <div style="font-size:0.75rem;font-weight:700;color:var(--muted);letter-spacing:1px;margin-bottom:8px">🎬 الفيديو</div>
-          <a href="${work.video}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:rgba(75,142,245,0.08);border:1px solid rgba(75,142,245,0.2);color:var(--accent);padding:9px 16px;border-radius:9px;font-family:'Cairo',sans-serif;font-size:0.85rem;font-weight:700;text-decoration:none">
-            ▶ شوف الفيديو ←
-          </a>
-        </div>`:'<div style="color:var(--muted);font-size:0.82rem;margin-bottom:1rem;padding:0.8rem;background:var(--bg3);border-radius:8px">⚠️ ما زال ما رفعوش فيديو</div>'}
-        ${work.metrics?`
-        <div>
-          <div style="font-size:0.75rem;font-weight:700;color:var(--muted);letter-spacing:1px;margin-bottom:8px">📊 مقاييس الحملة</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.7rem">
-            ${work.metrics.sales?`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:0.9rem"><div style="font-size:0.7rem;color:var(--muted)">المبيعات</div><div style="font-size:1.3rem;font-weight:900;color:var(--accent)">${work.metrics.sales}</div></div>`:''}
-            ${work.metrics.roas?`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:0.9rem"><div style="font-size:0.7rem;color:var(--muted)">ROAS</div><div style="font-size:1.3rem;font-weight:900;color:var(--accent)">${work.metrics.roas}x</div></div>`:''}
-            ${work.metrics.reach?`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:0.9rem"><div style="font-size:0.7rem;color:var(--muted)">Reach</div><div style="font-size:1.3rem;font-weight:900;color:var(--accent)">${work.metrics.reach}</div></div>`:''}
-            ${work.metrics.clicks?`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:0.9rem"><div style="font-size:0.7rem;color:var(--muted)">Clicks</div><div style="font-size:1.3rem;font-weight:900;color:var(--accent)">${work.metrics.clicks}</div></div>`:''}
-          </div>
-        </div>`:'<div style="color:var(--muted);font-size:0.82rem;padding:0.8rem;background:var(--bg3);border-radius:8px">⚠️ ما زال ما أضافوش مقاييس</div>'}
-        ${work.notes?`<div style="margin-top:1rem;padding:0.9rem;background:var(--bg3);border:1px solid var(--border);border-radius:9px;font-size:0.83rem;color:var(--muted);line-height:1.7">${work.notes}</div>`:''}
-      </div>
-    </div>`;
-
-  // Score form
-  const criteria=state.criteria||getDefaultCriteria();
-  const judgeId=state.currentJudge?.id;
-  const saved=((state.scores[judgeId]||{})[teamId])||{};
-  document.getElementById('judge-score-section').style.display='block';
-  document.getElementById('judge-score-form').innerHTML=criteria.map(c=>{
-    const val=saved[c.id]||0;
-    return`<div style="margin-bottom:1.1rem">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
-        <div style="font-size:0.88rem;font-weight:700">${c.name}<span style="font-size:0.72rem;color:var(--muted);margin-right:6px">${c.desc||''}</span></div>
-        <div style="display:flex;align-items:center;gap:6px">
-          <input type="number" id="jsc-${c.id}" value="${val}" min="0" max="${c.max}"
-            style="width:64px;background:var(--bg3);border:1px solid var(--border2);border-radius:7px;padding:5px 8px;color:var(--text);font-family:'Cairo',sans-serif;font-size:0.95rem;font-weight:700;outline:none;text-align:center"
-            oninput="judgeUpdateBar(${c.id},${c.max})">
-          <span style="font-size:0.75rem;color:var(--muted)">/ ${c.max}</span>
-        </div>
-      </div>
-      <div style="height:5px;background:var(--border2);border-radius:3px;overflow:hidden">
-        <div id="jbar-${c.id}" style="height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));width:${Math.round(val/c.max*100)}%;transition:width 0.3s"></div>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function judgeUpdateBar(cId,max){
-  const val=Math.min(max,Math.max(0,parseInt(document.getElementById('jsc-'+cId)?.value)||0));
-  const bar=document.getElementById('jbar-'+cId);
-  if(bar)bar.style.width=Math.round(val/max*100)+'%';
-}
-
-function submitJudgeScores(){
-  const judgeId=state.currentJudge?.id;
-  const teamId=judgeSelectedTeam;
-  if(!judgeId||!teamId){return;}
-  const criteria=state.criteria||getDefaultCriteria();
-  if(!state.scores[judgeId])state.scores[judgeId]={};
-  if(!state.scores[judgeId][teamId])state.scores[judgeId][teamId]={};
-  criteria.forEach(c=>{
-    const val=Math.min(c.max,Math.max(0,parseInt(document.getElementById('jsc-'+c.id)?.value)||0));
-    state.scores[judgeId][teamId][c.id]=val;
-  });
-  saveAll();
-  const team=state.teams.find(t=>String(t.id)===String(teamId));
-  const msg = JUDGE_LANG==='fr' ? `✅ Évaluation de "${team?.name}" enregistrée !` : `✅ تم حفظ تقييمك لـ "${team?.name}"!`;
-  toast(msg,'success');
-}
-
-// ══ TEAM WORK (admin) ══
-function renderTeamWork(){
-  const list=document.getElementById('team-work-list');
-  if(!list)return;
-  if(!state.teams.length){list.innerHTML='<div style="color:var(--muted);padding:2rem;text-align:center">لا يوجد فرق بعد — أضف فرقاً أولاً</div>';return;}
-  if(!state.teamWork)state.teamWork={};
-  list.innerHTML=state.teams.map(t=>{
-    const w=state.teamWork[t.id]||{};
-    return`<div style="background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:1.5rem">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:1.2rem">
-        <div style="width:10px;height:10px;border-radius:50%;background:${t.color}"></div>
-        <div style="font-size:0.95rem;font-weight:800">${t.name}</div>
-      </div>
-      <div class="f-row" style="margin-bottom:1rem">
-        <div class="f-group">
-          <label>🎬 رابط الفيديو</label>
-          <input type="url" id="tw-video-${t.id}" placeholder="https://youtube.com/..." dir="ltr" value="${w.video||''}">
-        </div>
-        <div class="f-group">
-          <label>📝 ملاحظات</label>
-          <input type="text" id="tw-notes-${t.id}" placeholder="أي معلومات إضافية..." value="${w.notes||''}">
-        </div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:0.7rem;margin-bottom:1rem">
-        <div class="f-group">
-          <label>💰 المبيعات</label>
-          <input type="text" id="tw-sales-${t.id}" placeholder="مثال: 45,000 DA" value="${w.metrics?.sales||''}">
-        </div>
-        <div class="f-group">
-          <label>📈 ROAS</label>
-          <input type="text" id="tw-roas-${t.id}" placeholder="مثال: 3.2" value="${w.metrics?.roas||''}">
-        </div>
-        <div class="f-group">
-          <label>👁 Reach</label>
-          <input type="text" id="tw-reach-${t.id}" placeholder="مثال: 12,000" value="${w.metrics?.reach||''}">
-        </div>
-        <div class="f-group">
-          <label>🖱 Clicks</label>
-          <input type="text" id="tw-clicks-${t.id}" placeholder="مثال: 850" value="${w.metrics?.clicks||''}">
-        </div>
-      </div>
-      <button onclick="saveTeamWork('${t.id}')" class="btn-sm" style="color:var(--accent);border-color:rgba(75,142,245,0.3)">حفظ ←</button>
-    </div>`;
-  }).join('');
-}
-
-function saveTeamWork(teamId){
-  if(!state.teamWork)state.teamWork={};
-  state.teamWork[teamId]={
-    video:document.getElementById('tw-video-'+teamId)?.value.trim()||'',
-    notes:document.getElementById('tw-notes-'+teamId)?.value.trim()||'',
-    metrics:{
-      sales:document.getElementById('tw-sales-'+teamId)?.value.trim()||'',
-      roas:document.getElementById('tw-roas-'+teamId)?.value.trim()||'',
-      reach:document.getElementById('tw-reach-'+teamId)?.value.trim()||'',
-      clicks:document.getElementById('tw-clicks-'+teamId)?.value.trim()||'',
-    }
-  };
-  save('camp_team_work',state.teamWork);
-  toast('تم حفظ أعمال الفريق ✓','success');
-}
-
-// ══ END JUDGE PORTAL ══
-
-function renderPublicSchedule(day){
-  const schedule = JSON.parse(localStorage.getItem('camp_schedule') || 'null') || getDefaultSchedule();
-  const tabs = document.getElementById('pub-day-tabs');
-  tabs.innerHTML=[1,2,3,4].map(d=>`
-    <button onclick="renderPublicSchedule(${d})" style="padding:7px 18px;border-radius:8px;border:1px solid ${d===day?'rgba(75,142,245,0.4)':'var(--border2)'};background:${d===day?'rgba(75,142,245,0.1)':'transparent'};color:${d===day?'var(--accent)':'var(--muted)'};font-family:Cairo,sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;transition:all 0.2s">اليوم ${d}</button>`).join('');
-
-  const tl = document.getElementById('pub-timeline');
-  const sessions = schedule.filter(s=>s.day===day).sort((a,b)=>a.time.localeCompare(b.time));
-  const typeColors = {opening:'var(--accent)',competition:'#ef4444',workshop:'#3b82f6',judging:'#a855f7',break:'var(--muted2)',closing:'#22c55e'};
-  const typeLabels = {opening:'افتتاح',competition:'منافسة',workshop:'ورشة',judging:'تقييم',break:'استراحة',closing:'ختام'};
-
-  const line = '<div style="position:absolute;right:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--accent),transparent)"></div>';
-
-  if(!sessions.length){
-    tl.innerHTML = line + '<div style="color:var(--muted);font-size:0.88rem;padding:2rem 0">لا يوجد جلسات لهذا اليوم بعد.</div>';
-    return;
-  }
-
-  tl.innerHTML = line + sessions.map(s=>`
-    <div style="position:relative;padding-bottom:1.5rem;padding-right:1.8rem">
-      <div style="position:absolute;right:-0.45rem;top:3px;width:14px;height:14px;border-radius:50%;background:${typeColors[s.type]||'var(--accent)'};border:2px solid var(--bg)"></div>
-      <div style="font-size:0.72rem;font-weight:700;color:var(--accent);margin-bottom:4px">${s.time}</div>
-      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1rem">
-        <div style="font-size:0.95rem;font-weight:800;margin-bottom:${s.desc?'6px':'0'}">${s.title}</div>
-        ${s.desc?`<div style="font-size:0.82rem;color:var(--muted);line-height:1.6;margin-bottom:6px">${s.desc}</div>`:''}
-        <span style="display:inline-block;padding:3px 10px;border-radius:100px;font-size:0.7rem;font-weight:700;background:rgba(75,142,245,0.08);border:1px solid rgba(75,142,245,0.2);color:var(--accent)">${typeLabels[s.type]||s.type}</span>
-      </div>
-    </div>`).join('');
+function toast(msg,type){
+  var t=document.getElementById('toast');
+  t.textContent=msg;
+  t.className='toast show '+(type||'');
+  setTimeout(function(){t.classList.remove('show')},2500);
 }
 </script>
+
 </body>
 </html>
